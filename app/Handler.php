@@ -31,16 +31,12 @@
 				"trace" => $exception->getTrace()
 			);
 			
-			if (!is_string($data))
-			{
-				$data = json_encode($data, JSON_PRETTY_PRINT);
-			}
-
-			echo($data . "\n");
+			Logbook::get(Loggers::GENERAL)->error($exception->getMessage(), $data);
 			
-			
-			#Logbook::get(Loggers::GENERAL)->error($exception->getMessage(), $data);
+			unset($data['trace']);
 
+			echo(json_encode($data, JSON_PRETTY_PRINT) . "\n");
+			
 			return true;
 		}
 	}
