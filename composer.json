@@ -2,7 +2,7 @@
     "name": "steve/advent-2019",
     "type": "project",
     "require": {
-        "cruxoft/bolt": "^0.4.0"
+        "cruxoft/bolt-core": "^0.8.0"
     },
     "require-dev": {
         "cruxoft/dump": "^0.2.2"
