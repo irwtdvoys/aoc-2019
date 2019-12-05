@@ -48,10 +48,10 @@
 				$this->instructionPointer++;
 			}
 		}
-		
-		public function output()
+
+		public function output(): string
 		{
-			echo($this->memory[0] . "\n");
+			return $this->memory[0];
 		}
 		
 		public function setProgram($string)
