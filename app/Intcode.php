@@ -57,6 +57,47 @@
 
 					$this->memory[$instruction->parameters[2]->value] = $parameters[0] * $parameters[1];
 					break;
+				case 3:
+					// Opcode 3 takes a single integer as input and saves it to the position given by its only parameter. For example, the instruction 3,50 would take an input value and store it at address 50.
+					fputs(STDOUT, "Enter Value: ");
+					$value = (int)trim(fgets(STDIN));
+
+					$this->memory[$instruction->parameters[0]->value] = $value;
+					break;
+				case 4:
+					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
+					fputs(STDOUT, $this->memory[$instruction->parameters[0]->value] . PHP_EOL);
+					break;
+				case 5:
+					// if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
+					$parameters = $this->getParameters($instruction);
+
+					if ($parameters[0] !== 0)
+					{
+						$this->cursor = $parameters[1];
+					}
+					break;
+				case 6:
+					// if the first parameter is zero, it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
+					$parameters = $this->getParameters($instruction);
+
+					if ($parameters[0] === 0)
+					{
+						$this->cursor = $parameters[1];
+					}
+					break;
+				case 7:
+					// if the first parameter is less than the second parameter, it stores 1 in the position given by the third parameter. Otherwise, it stores 0.
+					$parameters = $this->getParameters($instruction);
+
+					$this->memory[$instruction->parameters[2]->value] = ($parameters[0] < $parameters[1]) ? 1 : 0;
+					break;
+				case 8:
+					// if the first parameter is equal to the second parameter, it stores 1 in the position given by the third parameter. Otherwise, it stores 0.
+					$parameters = $this->getParameters($instruction);
+
+					$this->memory[$instruction->parameters[2]->value] = ($parameters[0] === $parameters[1]) ? 1 : 0;
+					break;
 				case 99:
 					$this->stopped = true;
 					break;
