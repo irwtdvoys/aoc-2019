@@ -99,15 +99,12 @@
 					$countIncrease++;
 				}
 
-				if ($increases)
-
-
 				if ($hasDouble === true && $increases === true && $badDoubles === false)
 				{
 					$count++;
 				}
 			}
-			
+
 			return $count;
 		}
 	}

@@ -1,6 +1,6 @@
 <?php
 	namespace App\Intcode;
-	
+
 	use Exception;
 
 	class Parameter

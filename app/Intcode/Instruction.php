@@ -2,12 +2,12 @@
 	namespace App\Intcode;
 
 	use Exception;
-	
+
 	class Instruction
 	{
 		public int $opcode;
 		public array $parameters = array();
-		
+
 		public function __construct($data) // data may be too much, only parameterise required amount
 		{
 			$first = $data[0];

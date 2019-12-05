@@ -1,7 +1,7 @@
 <?php
 	define("ROOT", __DIR__ . "/../");
-	
-	require_once(ROOT . "bin/init.php");	
+
+	require_once(ROOT . "bin/init.php");
 
 	use App\Intcode;
 
@@ -17,13 +17,13 @@
 
 	// Part 2: 19690720
 	#$helper->initialise(80, 18);
-	
+
 	$result = $helper->run();
 
 	echo($result . PHP_EOL);
-	
+
 	// $noun++ = +243000
 	// $verb++ = +1
-	
+
 	// 80, 18
 ?>

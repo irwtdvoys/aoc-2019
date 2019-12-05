@@ -1,6 +1,6 @@
 <?php
 	define("ROOT", __DIR__ . "/../");
-	
+
 	include_once(ROOT . "bin/init.php");
 
 	use App\PasswordCrack;

@@ -11,7 +11,7 @@
 		{
 			throw new Error($message, 0, $level, $file, $line);
 		}
-		
+
 		public static function exception($exception)
 		{
 			$className = get_class($exception);
@@ -22,7 +22,7 @@
 			{
 				$type .= "::" . $exception->getCodeKey();
 			}
-			
+
 			$data = array(
 				"type" => $type,
 				"message" => $exception->getMessage(),
@@ -31,13 +31,13 @@
 				"file" => $exception->getFile(),
 				"trace" => $exception->getTrace()
 			);
-			
+
 			Logbook::get(Loggers::GENERAL)->error($exception->getMessage(), $data);
-			
+
 			unset($data['trace']);
 
 			echo(json_encode($data, JSON_PRETTY_PRINT) . PHP_EOL);
-			
+
 			return true;
 		}
 	}
