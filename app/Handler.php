@@ -2,13 +2,14 @@
 	namespace App;
 
 	use Bolt\Exception;
+	use Bolt\Exceptions\Error;
 	use Cruxoft\Logbook;
 
 	class Handler
 	{
 		public static function error($level, $message, $file, $line, $context)
 		{
-			throw new \Bolt\Exceptions\Error($message, 0, $level, $file, $line);
+			throw new Error($message, 0, $level, $file, $line);
 		}
 		
 		public static function exception($exception)
@@ -35,7 +36,7 @@
 			
 			unset($data['trace']);
 
-			echo(json_encode($data, JSON_PRETTY_PRINT) . "\n");
+			echo(json_encode($data, JSON_PRETTY_PRINT) . PHP_EOL);
 			
 			return true;
 		}

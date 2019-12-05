@@ -1,9 +1,11 @@
 {
     "name": "steve/advent-2019",
-    "type": "project",
+	"license": "Apache-2.0",
+	"type": "project",
     "require": {
         "cruxoft/bolt-core": "^0.8.0",
-        "cruxoft/logbook": "^0.1.3"
+        "cruxoft/logbook": "^0.1.3",
+	    "ext-json": "*"
     },
     "require-dev": {
         "cruxoft/dump": "^0.2.2"
