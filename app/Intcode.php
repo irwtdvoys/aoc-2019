@@ -60,10 +60,9 @@
 				return (int)$element;
 			}, explode(",", $string));
 		}
-		
-		public function initialise(int $noun, int $verb)
+
+		public function initialise(int $noun, int $verb): void
 		{
-			$this->load(ROOT . "data/02");
 			$this->memory[1] = $noun;
 			$this->memory[2] = $verb;
 		}
