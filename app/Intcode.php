@@ -30,7 +30,7 @@
 
 		private function getValue(Parameter $parameter): int
 		{
-			return ($parameter->mode === 0) ? $this->memory[$parameter->value] : $parameter->value;
+			return ($parameter->mode === Modes::POSITION) ? $this->memory[$parameter->value] : $parameter->value;
 		}
 
 		private function getParameters(Instruction $instruction): array

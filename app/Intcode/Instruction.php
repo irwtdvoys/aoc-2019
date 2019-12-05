@@ -38,7 +38,7 @@
 			}
 
 			// Build full parameter mode list in matching order (default 0)
-			$modes = strrev(substr(str_pad((string)$first, $count + 2, "0", STR_PAD_LEFT), 0, -2));
+			$modes = strrev(substr(str_pad((string)$first, $count + 2, (string)Modes::POSITION, STR_PAD_LEFT), 0, -2));
 
 			// Add parameters to instruction
 			for ($index = 1; $index <= $count; $index++)
