@@ -2,6 +2,7 @@
 	namespace App;
 
 	use App\Intcode\Instruction;
+	use App\Intcode\Modes;
 	use App\Intcode\Parameter;
 	use Bolt\Files;
 	use Exception;
