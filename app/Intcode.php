@@ -20,7 +20,7 @@
 
 		public function nextInstruction(): Instruction
 		{
-			// send 4 long memory chunk from cursor (max used by instructions, only required)
+			// send 4 long memory chunk from cursor (max used by instructions, only required added to instruction)
 			$instruction = new Instruction(array_slice($this->memory, $this->cursor, 4));
 
 			// Move cursor dynamic amount based on number of memory locations used by the instruction
