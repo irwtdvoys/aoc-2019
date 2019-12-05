@@ -12,7 +12,7 @@
 		public bool $stopped = false;
 		public int $cursor = 0;
 
-		public function load($filename = "input.txt"): void
+		public function load(string $filename = "input.txt"): void
 		{
 			$this->setProgram((new Files())->load($filename));
 		}
@@ -128,7 +128,7 @@
 			return $this->memory[0];
 		}
 
-		public function setProgram($string): void
+		public function setProgram(string $string): void
 		{
 			$this->memory = array_map(function ($element) {
 				return (int)$element;

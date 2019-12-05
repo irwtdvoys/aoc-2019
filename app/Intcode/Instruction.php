@@ -5,8 +5,8 @@
 	
 	class Instruction
 	{
-		public $opcode;
-		public $parameters = array();
+		public int $opcode;
+		public array $parameters = array();
 		
 		public function __construct($data) // data may be too much, only parameterise required amount
 		{
