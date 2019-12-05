@@ -27,16 +27,35 @@
 
 			return $instruction;
 		}
-		
-		public function processInstruction(Instruction $instruction)
+
+		private function getValue(Parameter $parameter): int
+		{
+			return ($parameter->mode === 0) ? $this->memory[$parameter->value] : $parameter->value;
+		}
+
+		private function getParameters(Instruction $instruction): array
+		{
+			return array(
+				$this->getValue($instruction->parameters[0]),
+				$this->getValue($instruction->parameters[1])
+			);
+		}
+
+		public function processInstruction(Instruction $instruction): void
 		{
 			switch ($instruction->opcode)
 			{
 				case 1:
-					$this->memory[$instruction->parameters[2]] = $this->memory[$instruction->parameters[0]] + $this->memory[$instruction->parameters[1]];
+					// Opcode 1 adds together numbers read from two positions and stores the result in a third position.
+					$parameters = $this->getParameters($instruction);
+
+					$this->memory[$instruction->parameters[2]->value] = $parameters[0] + $parameters[1];
 					break;
 				case 2:
-					$this->memory[$instruction->parameters[2]] = $this->memory[$instruction->parameters[0]] * $this->memory[$instruction->parameters[1]];
+					// Opcode 2 works exactly like opcode 1, except it multiplies the two inputs instead of adding them.
+					$parameters = $this->getParameters($instruction);
+
+					$this->memory[$instruction->parameters[2]->value] = $parameters[0] * $parameters[1];
 					break;
 				case 99:
 					$this->stopped = true;
