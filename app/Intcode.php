@@ -2,6 +2,7 @@
 	namespace App;
 
 	use App\Intcode\Instruction;
+	use App\Intcode\Modes;
 	use App\Intcode\Parameter;
 	use Bolt\Files;
 	use Exception;
@@ -12,14 +13,14 @@
 		public bool $stopped = false;
 		public int $cursor = 0;
 
-		public function load($filename = "input.txt"): void
+		public function load(string $filename = "input.txt"): void
 		{
 			$this->setProgram((new Files())->load($filename));
 		}
 
 		public function nextInstruction(): Instruction
 		{
-			// send 4 long memory chunk from cursor (max used by instructions, only required)
+			// send 4 long memory chunk from cursor (max used by instructions, only required added to instruction)
 			$instruction = new Instruction(array_slice($this->memory, $this->cursor, 4));
 
 			// Move cursor dynamic amount based on number of memory locations used by the instruction
@@ -128,7 +129,7 @@
 			return $this->memory[0];
 		}
 
-		public function setProgram($string): void
+		public function setProgram(string $string): void
 		{
 			$this->memory = array_map(function ($element) {
 				return (int)$element;

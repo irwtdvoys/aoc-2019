@@ -1,12 +1,12 @@
 <?php
 	namespace App\Intcode;
-	
+
 	use Exception;
 
 	class Parameter
 	{
-		public $value;
-		public $mode;
+		public int $value;
+		public int $mode;
 
 		public function __construct(int $value, int $mode = Modes::POSITION)
 		{
