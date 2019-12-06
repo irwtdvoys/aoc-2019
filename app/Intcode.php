@@ -67,7 +67,7 @@
 					break;
 				case 4:
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
-					fputs(STDOUT, $this->memory[$instruction->parameters[0]->value] . PHP_EOL);
+					fputs(STDOUT, $this->getValue($instruction->parameters[0]) . PHP_EOL);
 					break;
 				case 5:
 					// if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
