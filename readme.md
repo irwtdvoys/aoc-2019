@@ -27,3 +27,7 @@ Got stuck with part 2 after misunderstanding the new double rule and thinking co
 ##### Day 05
 
 Made a few improvements to the Intcode class from day 02. Removed the reliance on instruction size and I feel it's a lot more extensible now. Once the improvements were done parts 1 and 2 were fairly simple additions.
+
+##### Day 06
+
+Used recursion to calculate the numbers of orbits, slightly hacky wheh calculating if a body contains another in it's orbit.
