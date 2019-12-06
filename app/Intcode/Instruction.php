@@ -11,7 +11,9 @@
 		public function __construct($data) // data may be too much, only parameterise required amount
 		{
 			$first = $data[0];
-			$this->opcode = (int)substr((string)$first, -2);
+
+			$this->opcode = $first % 100;
+			$modes = floor($first / 100);
 
 			switch ($this->opcode)
 			{
@@ -37,14 +39,13 @@
 					break;
 			}
 
-			// Build full parameter mode list in matching order (default 0)
-			$modes = strrev(substr(str_pad((string)$first, $count + 2, (string)Modes::POSITION, STR_PAD_LEFT), 0, -2));
-
 			// Add parameters to instruction
 			for ($index = 1; $index <= $count; $index++)
 			{
 				$value = $data[$index];
-				$mode = (int)$modes[$index - 1];
+
+				$mode = $modes % 10;
+				$modes = floor($modes / 10);
 
 				$this->parameters[] = new Parameter($value, $mode);
 			}
