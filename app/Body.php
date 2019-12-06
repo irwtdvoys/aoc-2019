@@ -1,4 +1,4 @@
-<?php
+, <?php
 
 	namespace App;
 
@@ -17,7 +17,7 @@
 			$this->parent = null;
 		}
 
-		public function conatins($name)
+		public function contains($name)
 		{
 			$data = json_encode($this->links);
 
