@@ -58,7 +58,7 @@
 
 			for ($orbit = $from->orbits; $orbit > 0; $orbit--)
 			{
-				$isRoot = $current->conatins($to->name);
+				$isRoot = $current->contains($to->name);
 
 				if ($isRoot === true)
 				{
@@ -102,7 +102,6 @@
 				case 2:
 					$result = $this->orbitalChanges("YOU", "SAN");
 					break;
-
 			}
 
 			return $result;
