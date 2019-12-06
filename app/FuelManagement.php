@@ -6,17 +6,16 @@
 	class FuelManagement
 	{
 		public $paths;
-
 		public $grid = array();
 		public $steps = array();
-
 		private $cursor;
 
 		public function addPath(string $path)
 		{
 			$elements = explode(",", $path);
 
-			$this->paths[] = array_map(function ($element) {
+			$this->paths[] = array_map(function ($element)
+			{
 				return array(
 					"direction" => $element[0],
 					"distance" => (int)substr($element, 1)
@@ -71,7 +70,7 @@
 				for ($loop = 0; $loop < $step['distance']; $loop++)
 				{
 					$this->cursor = $function($this->cursor);
-					$identifier = $this->cursor[0] . "," .  $this->cursor[1];
+					$identifier = $this->cursor[0] . "," . $this->cursor[1];
 
 					if (!isset($this->grid[$identifier]))
 					{
@@ -132,7 +131,7 @@
 
 		private function getCrossovers(): array
 		{
-			return array_keys(array_filter($this->grid, function($element) {
+			return array_keys(array_filter($this->grid, function ($element) {
 				return $element === 3;
 			}));
 		}

@@ -2,6 +2,7 @@
 	namespace App;
 
 	use App\Intcode\Instruction;
+	use App\Intcode\Modes;
 	use App\Intcode\Parameter;
 	use Bolt\Files;
 	use Exception;
@@ -12,14 +13,14 @@
 		public bool $stopped = false;
 		public int $cursor = 0;
 
-		public function load($filename = "input.txt"): void
+		public function load(string $filename = "input.txt"): void
 		{
 			$this->setProgram((new Files())->load($filename));
 		}
 
 		public function nextInstruction(): Instruction
 		{
-			// send 4 long memory chunk from cursor (max used by instructions, only required)
+			// send 4 long memory chunk from cursor (max used by instructions, only required added to instruction)
 			$instruction = new Instruction(array_slice($this->memory, $this->cursor, 4));
 
 			// Move cursor dynamic amount based on number of memory locations used by the instruction
@@ -30,7 +31,7 @@
 
 		private function getValue(Parameter $parameter): int
 		{
-			return ($parameter->mode === 0) ? $this->memory[$parameter->value] : $parameter->value;
+			return ($parameter->mode === Modes::POSITION) ? $this->memory[$parameter->value] : $parameter->value;
 		}
 
 		private function getParameters(Instruction $instruction): array
@@ -66,7 +67,7 @@
 					break;
 				case 4:
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
-					fputs(STDOUT, $this->memory[$instruction->parameters[0]->value] . PHP_EOL);
+					fputs(STDOUT, $this->getValue($instruction->parameters[0]) . PHP_EOL);
 					break;
 				case 5:
 					// if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
@@ -128,7 +129,7 @@
 			return $this->memory[0];
 		}
 
-		public function setProgram($string): void
+		public function setProgram(string $string): void
 		{
 			$this->memory = array_map(function ($element) {
 				return (int)$element;
