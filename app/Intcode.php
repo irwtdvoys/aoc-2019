@@ -12,6 +12,7 @@
 		public array $memory = array();
 		public bool $stopped = false;
 		public int $cursor = 0;
+		public array $inputs = array();
 
 		public function load(string $filename = "input.txt"): void
 		{
@@ -108,8 +109,9 @@
 			}
 		}
 
-		public function run(): string
+		public function run(array $inputs = []): string
 		{
+			$this->inputs = $inputs;
 			$count = 0;
 
 			while (!$this->stopped)
