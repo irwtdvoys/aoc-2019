@@ -7,7 +7,9 @@
 
 	$helper = new Intcode();
 	$helper->load(ROOT . "data/05");
-	$helper->run();
+	$result = $helper->run();
+
+	echo($result);
 
 	// Part 1: 15386262
 	// Part 2: 10376124
