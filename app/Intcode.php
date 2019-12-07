@@ -13,6 +13,7 @@
 		public bool $stopped = false;
 		public int $cursor = 0;
 		public array $inputs = array();
+		public string $output = "";
 
 		public function load(string $filename = "input.txt"): void
 		{
@@ -78,7 +79,7 @@
 					break;
 				case 4:
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
-					fputs(STDOUT, $this->getValue($instruction->parameters[0]) . PHP_EOL);
+					$this->output .= $this->getValue($instruction->parameters[0]) . PHP_EOL;
 					break;
 				case 5:
 					// if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
@@ -138,7 +139,7 @@
 
 		public function output(): string
 		{
-			return $this->memory[0];
+			return $this->output;
 		}
 
 		public function setProgram(string $string): void
