@@ -12,6 +12,7 @@
 		public array $memory = array();
 		public bool $stopped = false;
 		public int $cursor = 0;
+		public array $inputs = array();
 
 		public function load(string $filename = "input.txt"): void
 		{
@@ -42,6 +43,11 @@
 			);
 		}
 
+		public function nextInput(): ?int
+		{
+			return (count($this->inputs) > 0) ? array_shift($this->inputs) : null;
+		}
+
 		public function processInstruction(Instruction $instruction): void
 		{
 			switch ($instruction->opcode)
@@ -60,8 +66,13 @@
 					break;
 				case 3:
 					// Opcode 3 takes a single integer as input and saves it to the position given by its only parameter. For example, the instruction 3,50 would take an input value and store it at address 50.
-					fputs(STDOUT, "Enter Value: ");
-					$value = (int)trim(fgets(STDIN));
+					$value = $this->nextInput();
+
+					if ($value === null)
+					{
+						fputs(STDOUT, "Enter Value: ");
+						$value = (int)trim(fgets(STDIN));
+					}
 
 					$this->memory[$instruction->parameters[0]->value] = $value;
 					break;
@@ -108,8 +119,9 @@
 			}
 		}
 
-		public function run(): string
+		public function run(array $inputs = []): string
 		{
+			$this->inputs = $inputs;
 			$count = 0;
 
 			while (!$this->stopped)
