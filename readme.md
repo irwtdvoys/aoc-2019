@@ -31,3 +31,7 @@ Made a few improvements to the Intcode class from day 02. Removed the reliance o
 ##### Day 06
 
 Used recursion to calculate the numbers of orbits, slightly hacky wheh calculating if a body contains another in it's orbit.
+
+##### Day 07
+
+Main issue for the day was having to add an interrupt/wait system to the intcode as PHP is single threaded.
