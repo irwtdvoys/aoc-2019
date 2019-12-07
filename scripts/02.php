@@ -18,9 +18,9 @@
 	// Part 2: 19690720
 	#$helper->initialise(80, 18);
 
-	$result = $helper->run();
+	$helper->run();
 
-	echo($result . PHP_EOL);
+	echo($helper->memory[0] . PHP_EOL);
 
 	// $noun++ = +243000
 	// $verb++ = +1
