@@ -15,6 +15,13 @@
 		public array $inputs = array();
 		public string $output = "";
 
+		public bool $allowInterrupts = false;
+
+		public function __construct(bool $interrupts = false)
+		{
+			$this->allowInterrupts = $interrupts;
+		}
+
 		public function load(string $filename = "input.txt"): void
 		{
 			$this->setProgram((new Files())->load($filename));
@@ -80,6 +87,11 @@
 				case 4:
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
 					$this->output .= $this->getValue($instruction->parameters[0]) . PHP_EOL;
+
+					if ($this->allowInterrupts === true)
+					{
+						$this->stopped = true;
+					}
 					break;
 				case 5:
 					// if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
