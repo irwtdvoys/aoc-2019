@@ -132,20 +132,16 @@
 			}
 		}
 
-		public function run(array $inputs = []): string
+		public function run(array $inputs = []): ?string
 		{
 			$this->stopped = false;
 			$this->inputs = $inputs;
-			$count = 0;
 			$this->output = "";
 
 			while (!$this->stopped)
 			{
 				$instruction = $this->nextInstruction();
-
 				$this->processInstruction($instruction);
-
-				$count++;
 			}
 
 			return $this->output();
