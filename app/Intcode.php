@@ -78,10 +78,19 @@
 
 		private function getParameters(Instruction $instruction): array
 		{
-			return array(
-				$this->getValue($instruction->parameters[0]),
-				$this->getValue($instruction->parameters[1])
-			);
+			if (count($instruction->parameters) === 0)
+			{
+				return array();
+			}
+
+			$result = array();
+
+			foreach ($instruction->parameters as $parameter)
+			{
+				$result[] = $this->getValue($parameter);
+			}
+
+			return $result;
 		}
 
 		public function nextInput(): ?int

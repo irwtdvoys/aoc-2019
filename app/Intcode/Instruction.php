@@ -10,10 +10,7 @@
 
 		public function __construct($data) // data may be too much, only parameterise required amount
 		{
-			$first = $data[0];
-
-			$this->opcode = $first % 100;
-			$modes = floor($first / 100);
+			list($modes, $this->opcode) = $this->extract($data[0], 100);
 
 			switch ($this->opcode)
 			{
@@ -43,13 +40,17 @@
 			// Add parameters to instruction
 			for ($index = 1; $index <= $count; $index++)
 			{
-				$value = $data[$index];
+				list($modes, $mode) = $this->extract($modes, 10);
 
-				$mode = $modes % 10;
-				$modes = floor($modes / 10);
-
-				$this->parameters[] = new Parameter($value, $mode);
+				$this->parameters[] = new Parameter($data[$index], $mode);
 			}
+		}
+
+		private function extract($values, $base)
+		{
+			$value = $values % $base;
+
+			return array(floor($values / $base), $value);
 		}
 	}
 ?>
