@@ -161,6 +161,8 @@
 			$this->memory = array_map(function ($element) {
 				return (int)$element;
 			}, explode(",", $string));
+
+			$this->memory = array_pad($this->memory, 2000, 0); // Todo: hardcoded upper limit on memory
 		}
 
 		public function initialise(int $noun, int $verb): void
