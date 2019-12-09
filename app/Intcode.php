@@ -14,6 +14,7 @@
 		public int $cursor = 0;
 		public array $inputs = array();
 		public string $output = "";
+		public int $relativeBase = 0;
 
 		public bool $allowInterrupts = false;
 
@@ -40,15 +41,56 @@
 
 		private function getValue(Parameter $parameter): int
 		{
-			return ($parameter->mode === Modes::POSITION) ? $this->memory[$parameter->value] : $parameter->value;
+			switch ($parameter->mode)
+			{
+				case Modes::POSITION:
+				case Modes::RELATIVE:
+					$value = $this->memory[$this->getPosition($parameter)];
+					break;
+				case Modes::IMMEDIATE:
+					$value = $parameter->value;
+					break;
+				default:
+					throw new Exception("Unknown mode [" . $parameter->mode . "]");
+					break;
+			}
+
+			return $value;
+		}
+
+		private function getPosition(Parameter $parameter)
+		{
+			switch ($parameter->mode)
+			{
+				case Modes::POSITION:
+					$value = $parameter->value;
+					break;
+				case Modes::RELATIVE:
+					$value = $this->relativeBase + $parameter->value;
+					break;
+				default:
+					throw new Exception("Cannot get memory position for parameter in that mode [" . $parameter->mode . "]");
+					break;
+			}
+
+			return $value;
 		}
 
 		private function getParameters(Instruction $instruction): array
 		{
-			return array(
-				$this->getValue($instruction->parameters[0]),
-				$this->getValue($instruction->parameters[1])
-			);
+			if (count($instruction->parameters) === 0)
+			{
+				return array();
+			}
+
+			$result = array();
+
+			foreach ($instruction->parameters as $parameter)
+			{
+				$result[] = $this->getValue($parameter);
+			}
+
+			return $result;
 		}
 
 		public function nextInput(): ?int
@@ -64,13 +106,13 @@
 					// Opcode 1 adds together numbers read from two positions and stores the result in a third position.
 					$parameters = $this->getParameters($instruction);
 
-					$this->memory[$instruction->parameters[2]->value] = $parameters[0] + $parameters[1];
+					$this->memory[$this->getPosition($instruction->parameters[2])] = $parameters[0] + $parameters[1];
 					break;
 				case 2:
 					// Opcode 2 works exactly like opcode 1, except it multiplies the two inputs instead of adding them.
 					$parameters = $this->getParameters($instruction);
 
-					$this->memory[$instruction->parameters[2]->value] = $parameters[0] * $parameters[1];
+					$this->memory[$this->getPosition($instruction->parameters[2])] = $parameters[0] * $parameters[1];
 					break;
 				case 3:
 					// Opcode 3 takes a single integer as input and saves it to the position given by its only parameter. For example, the instruction 3,50 would take an input value and store it at address 50.
@@ -82,7 +124,7 @@
 						$value = (int)trim(fgets(STDIN));
 					}
 
-					$this->memory[$instruction->parameters[0]->value] = $value;
+					$this->memory[$this->getPosition($instruction->parameters[0])] = $value;
 					break;
 				case 4:
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
@@ -115,13 +157,16 @@
 					// if the first parameter is less than the second parameter, it stores 1 in the position given by the third parameter. Otherwise, it stores 0.
 					$parameters = $this->getParameters($instruction);
 
-					$this->memory[$instruction->parameters[2]->value] = ($parameters[0] < $parameters[1]) ? 1 : 0;
+					$this->memory[$this->getPosition($instruction->parameters[2])] = ($parameters[0] < $parameters[1]) ? 1 : 0;
 					break;
 				case 8:
 					// if the first parameter is equal to the second parameter, it stores 1 in the position given by the third parameter. Otherwise, it stores 0.
 					$parameters = $this->getParameters($instruction);
 
-					$this->memory[$instruction->parameters[2]->value] = ($parameters[0] === $parameters[1]) ? 1 : 0;
+					$this->memory[$this->getPosition($instruction->parameters[2])] = ($parameters[0] === $parameters[1]) ? 1 : 0;
+					break;
+				case 9:
+					$this->relativeBase += $this->getValue($instruction->parameters[0]);
 					break;
 				case 99:
 					$this->stopped = true;
@@ -157,6 +202,8 @@
 			$this->memory = array_map(function ($element) {
 				return (int)$element;
 			}, explode(",", $string));
+
+			$this->memory = array_pad($this->memory, 2000, 0); // Todo: hardcoded upper limit on memory
 		}
 
 		public function initialise(int $noun, int $verb): void
