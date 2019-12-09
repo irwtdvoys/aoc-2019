@@ -14,6 +14,7 @@
 		public int $cursor = 0;
 		public array $inputs = array();
 		public string $output = "";
+		public int $relativeBase = 0;
 
 		public bool $allowInterrupts = false;
 
@@ -122,6 +123,9 @@
 					$parameters = $this->getParameters($instruction);
 
 					$this->memory[$instruction->parameters[2]->value] = ($parameters[0] === $parameters[1]) ? 1 : 0;
+					break;
+				case 9:
+					$this->relativeBase += $this->getValue($instruction->parameters[0]);
 					break;
 				case 99:
 					$this->stopped = true;

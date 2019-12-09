@@ -25,6 +25,7 @@
 					break;
 				case 3:
 				case 4:
+				case 9:
 					$count = 1;
 					break;
 				case 5:
