@@ -7,5 +7,6 @@
 	{
 		const POSITION = 0;
 		const IMMEDIATE = 1;
+		const RELATIVE = 2;
 	}
 ?>

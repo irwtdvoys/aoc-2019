@@ -44,6 +44,7 @@
 			switch ($parameter->mode)
 			{
 				case Modes::POSITION:
+				case Modes::RELATIVE:
 					$value = $this->memory[$this->getPosition($parameter)];
 					break;
 				case Modes::IMMEDIATE:
@@ -63,6 +64,9 @@
 			{
 				case Modes::POSITION:
 					$value = $parameter->value;
+					break;
+				case Modes::RELATIVE:
+					$value = $this->relativeBase + $parameter->value;
 					break;
 				default:
 					throw new Exception("Cannot get memory position for parameter in that mode [" . $parameter->mode . "]");
