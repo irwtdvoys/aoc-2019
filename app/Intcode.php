@@ -180,6 +180,11 @@
 
 		public function run(array $inputs = []): ?string
 		{
+			if ($this->stopped === true)
+			{
+				throw new Exception("Program has halted");
+			}
+
 			$this->paused = false;
 			$this->inputs = $inputs;
 			$this->output = "";
