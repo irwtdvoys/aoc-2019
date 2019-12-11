@@ -11,6 +11,7 @@
 	{
 		public array $memory = array();
 		public bool $stopped = false;
+		public bool $paused = false;
 		public int $cursor = 0;
 		public array $inputs = array();
 		public string $output = "";
@@ -132,7 +133,7 @@
 
 					if ($this->allowInterrupts === true)
 					{
-						$this->stopped = true;
+						$this->paused = true;
 					}
 					break;
 				case 5:
@@ -179,11 +180,11 @@
 
 		public function run(array $inputs = []): ?string
 		{
-			$this->stopped = false;
+			$this->paused = false;
 			$this->inputs = $inputs;
 			$this->output = "";
 
-			while (!$this->stopped)
+			while (!$this->stopped && !$this->paused)
 			{
 				$instruction = $this->nextInstruction();
 				$this->processInstruction($instruction);
