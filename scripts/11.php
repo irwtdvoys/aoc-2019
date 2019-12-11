@@ -1,16 +1,14 @@
 <?php
-	use App\Intcode;
+	use App\Robot;
 
 	define("ROOT", __DIR__ . "/../");
 
 	include_once(ROOT . "bin/init.php");
 
-	$helper = new Intcode(true);
-	$helper->load(ROOT . "data/11");
+	$helper = new Robot();
+	$helper->load();
+	$helper->run(2);
 
-	while (true)
-	{
-		$result = $helper->run();
-		echo($result);
-	}
+	// Part 1: 2293
+	// Part 2: AHLCPRAL
 ?>
