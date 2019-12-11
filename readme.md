@@ -39,3 +39,15 @@ Main issue for the day was having to add an interrupt/wait system to the intcode
 ##### Day 08
 
 No real issues here, decided just to render the image in ascii of the cli rather than worrying about a bitmap library.
+
+##### Day 09
+
+Missed implementing mode 2 on instruction results, but the test failure codes pointed out where the issues were and part 2 just worked.
+
+##### Day 10
+
+Cut corners in part 1 by using gradient of vectors to easily group asteroids in the same line of sight. Had to be rewritten using trig for part 2 as it wasn't very easy to emulate the rotation of the laser.
+
+##### Day 11
+
+Had an issue with the intcode, when looping with interrupt mode on it wasn't possible to tell the difference between a pause and a halt.
