@@ -1,14 +1,14 @@
 <?php
-
 	namespace App;
 
 	use App\BreakoutTiles as Tiles;
+	use App\Intcode\VirtualMachine;
 	use App\Utils\Position2d;
 	use Exception;
 
 	class Arcade
 	{
-		private Intcode $computer;
+		private VirtualMachine $computer;
 		private array $board;
 
 		private Position2d $ball;
@@ -21,7 +21,7 @@
 
 		public function load()
 		{
-			$this->computer = new Intcode(true);
+			$this->computer = new VirtualMachine(true);
 			$this->computer->load(ROOT . "data/13");
 		}
 
@@ -35,6 +35,8 @@
 			$count = 0;
 			$input = [];
 
+			$loop = 1;
+
 			while (true)
 			{
 				try
@@ -42,11 +44,6 @@
 					$x = (int)$this->computer->run($input);
 					$y = (int)$this->computer->run();
 					$code = (int)$this->computer->run();
-
-					if ($code === Tiles::BLOCK)
-					{
-						$count++;
-					}
 
 					switch ($code)
 					{
@@ -73,8 +70,11 @@
 
 				$this->draw();
 				$this->inputDirection();
+
+				$loop++;
 			}
 
+			#echo($loop . PHP_EOL);
 
 			switch ($part)
 			{

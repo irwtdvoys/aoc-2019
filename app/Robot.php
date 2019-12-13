@@ -1,9 +1,10 @@
 <?php
 	namespace App;
 
+	use App\Intcode\VirtualMachine;
+	use App\Utils\Directions;
 	use Bolt\Enum;
 	use Exception;
-	use App\Utils\Directions;
 
 	class Colours extends Enum
 	{
@@ -24,7 +25,7 @@
 		private array $data;
 		private array $painted;
 
-		private Intcode $computer;
+		private VirtualMachine $computer;
 
 		public function __construct()
 		{
@@ -35,7 +36,7 @@
 
 			$this->painted = array();
 
-			$this->computer = new Intcode(true);
+			$this->computer = new VirtualMachine(true);
 		}
 
 		public function data(int $x, int $y, int $value = null): ?int
