@@ -3,9 +3,9 @@
 
 	require_once(ROOT . "bin/init.php");
 
-	use App\Intcode;
+	use App\Intcode\VirtualMachine;
 
-	$helper = new Intcode();
+	$helper = new VirtualMachine();
 
 	// Sample: 3500
 	$helper->setProgram("1,9,10,3,2,3,11,0,99,30,40,50");

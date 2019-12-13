@@ -8,7 +8,7 @@
 	$helper = new Arcade();
 	$helper->load();
 
-	$result = $helper->run(2);
+	$result = $helper->run(1);
 
 	echo($result . PHP_EOL);
 
