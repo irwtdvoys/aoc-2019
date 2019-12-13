@@ -51,3 +51,11 @@ Cut corners in part 1 by using gradient of vectors to easily group asteroids in 
 ##### Day 11
 
 Had an issue with the intcode, when looping with interrupt mode on it wasn't possible to tell the difference between a pause and a halt.
+
+##### Day 12
+
+Was disappointed in the lack of LCM/GCF in the PHP standard libraries, will be adding these method to the Bolt\Maths library.
+
+##### Day 13
+
+Had to bump the max memory of the intcode VM but no other real issues.
