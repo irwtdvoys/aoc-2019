@@ -3,9 +3,9 @@
 
 	include_once(ROOT . "bin/init.php");
 
-	use App\Intcode;
+	use App\Intcode\VirtualMachine;
 
-	$helper = new Intcode();
+	$helper = new VirtualMachine();
 	$helper->load(ROOT . "data/05");
 	$result = $helper->run();
 

@@ -3,7 +3,7 @@
 
 	include_once(ROOT . "bin/init.php");
 
-	use App\Intcode;
+	use App\Intcode\VirtualMachine;
 
 	$options = getopt("f:", array("filename:"));
 
@@ -14,7 +14,7 @@
 
 	$filename = isset($options['f']) ? $options['f'] : $options['filename'];
 
-	$helper = new Intcode();
+	$helper = new VirtualMachine();
 	$helper->load($filename);
 	$result = $helper->run();
 
