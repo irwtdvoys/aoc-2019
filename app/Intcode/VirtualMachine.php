@@ -1,13 +1,13 @@
 <?php
-	namespace App;
+	namespace App\Intcode;
 
-	use App\Intcode\Instruction;
-	use App\Intcode\Modes;
-	use App\Intcode\Parameter;
+	use App\Intcode\VM\Instruction;
+	use App\Intcode\VM\Modes;
+	use App\Intcode\VM\Parameter;
 	use Bolt\Files;
 	use Exception;
 
-	class Intcode
+	class VirtualMachine
 	{
 		public array $memory = array();
 		public bool $stopped = false;

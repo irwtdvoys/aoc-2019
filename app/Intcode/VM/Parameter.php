@@ -1,5 +1,5 @@
 <?php
-	namespace App\Intcode;
+	namespace App\Intcode\VM;
 
 	use Exception;
 
