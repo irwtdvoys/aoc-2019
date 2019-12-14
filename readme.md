@@ -59,3 +59,7 @@ Was disappointed in the lack of LCM/GCF in the PHP standard libraries, will be a
 ##### Day 13
 
 Had to bump the max memory of the intcode VM but no other real issues.
+
+##### Day 14
+
+Completed the first part recursively however part two would have taken ages to calculate to upgraded the system to allow for specifying multiples (not one at a time). This allowed estimation of the end goal and completed in just a few iterations.
