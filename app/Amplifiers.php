@@ -7,9 +7,7 @@
 	{
 		public array $sequences = array();
 
-		/**
-		 * @var VirtualMachine[]
-		 */
+		/** @var VirtualMachine[] */
 		public array $amps = array();
 
 		public function setup(array $sequence)
@@ -49,7 +47,7 @@
 
 				$count++;
 
-				if ($count === 5)
+				if ($count === count($sequence))
 				{
 					$initialise = false;
 					$count = 0;
