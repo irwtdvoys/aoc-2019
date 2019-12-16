@@ -6,7 +6,8 @@
 		"php": "^7.4.0",
 		"ext-json": "*",
 		"cruxoft/bolt-core": "^0.8.0",
-		"cruxoft/logbook": "^0.1.3"
+		"cruxoft/logbook": "^0.1.3",
+		"cruxoft/bolt-geojson": "^0.8.0"
 	},
 	"require-dev": {
 		"cruxoft/dump": "^0.2.2"

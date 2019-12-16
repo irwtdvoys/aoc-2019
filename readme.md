@@ -63,3 +63,12 @@ Had to bump the max memory of the intcode VM but no other real issues.
 ##### Day 14
 
 Completed the first part recursively however part two would have taken ages to calculate to upgraded the system to allow for specifying multiples (not one at a time). This allowed estimation of the end goal and completed in just a few iterations.
+
+##### Day 15
+
+Used an exploring algorithm by following th left wall while marking distances to each tile in the map. The same code solved part two by resetting the map and counter once the oxygen system had been found. The map was lucky in that the oxygen system was at the end of a deadend.
+
+##### Day 16
+
+Didn't see the correct solution to part two without a hint. The solution to part one was very much not scalable...
+
