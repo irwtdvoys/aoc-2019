@@ -96,6 +96,29 @@
 			return implode("", array_slice($this->output, 0, 8));
 		}
 
+		public function part2()
+		{
+			$target = (int)implode("", array_slice($this->input, 0, 7));
+
+			if ($target < count($this->input) / 2)
+			{
+				throw new Exception("Expects offset to be in last half");
+			}
+
+			$inputTail = array_slice($this->input, $target);
+			$length = count($inputTail);
+
+			for ($step = 0; $step < 100; $step++)
+			{
+				for ($index = $length - 2; $index > -1; $index--)
+				{
+					$inputTail[$index] += $inputTail[$index + 1];
+					$inputTail[$index] %= 10;
+				}
+			}
+
+			return implode("", array_slice($inputTail, 0, 8));
+		}
 
 		public function run()
 		{
@@ -110,6 +133,6 @@
 
 	echo($result . PHP_EOL);
 
-	// Part 1: 278404
-	// Part 2: 4436981
+	// Part 1: 36627552
+	// Part 2: 79723033
 ?>
