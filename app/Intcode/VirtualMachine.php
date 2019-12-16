@@ -26,7 +26,7 @@
 
 		public function load(string $filename = "input.txt"): void
 		{
-			$this->setProgram((new Files())->load($filename));
+			$this->setProgram(trim((new Files())->load($filename)));
 		}
 
 		public function nextInstruction(): Instruction
