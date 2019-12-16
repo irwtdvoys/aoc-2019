@@ -16,18 +16,21 @@
 
 		public array $base;
 
-		public array $history;
+		public int $part;
 
-		public function __construct()
+		public function __construct($part = 1)
 		{
 			$this->base = array(0, 1, 0, -1);
+			$this->part = $part;
 		}
 
 		public function load(string $input = null)
 		{
 			$data = ($input !== null) ? $input : trim((new Files())->load(ROOT . "data/16"));
 
-			$data = str_repeat($data, 1);//10000
+			$multiplier = ($this->part === 1) ? 1 : 10000;
+
+			$data = str_repeat($data, $multiplier);
 
 			$input = array_map(function ($element) {
 					return (int)$element;
@@ -55,48 +58,53 @@
 
 			$pattern = array_slice($pattern, 1, count($this->input));
 
-			dump(implode(",", $pattern));
-
 			return $pattern;
 		}
 
-		public function run()
+		public function part1()
 		{
 			$phase = 0;
 
-			while ($phase < 1)
+			while ($phase < 100)
 			{
-				echo(PHP_EOL . "[$phase]" . PHP_EOL);
 				$this->output = [];
+				$count = count($this->input);
 
-				for ($position = 0; $position < count($this->input); $position++)
+				for ($position = 0; $position < $count; $position++)
 				{
-					$pattern = $this->pattern($position + 1);
-
+					$step = $position + 1;
+					$index = $position;
 					$total = 0;
 
-					for ($loop = 0; $loop < count($this->input); $loop++)
+					while ($index < $count)
 					{
-						$total += $this->input[$loop] * $pattern[$loop];
+						$total += array_sum(array_slice($this->input, $index, $step));
+						$index += 2 * $step;
+
+						$total -= array_sum(array_slice($this->input, $index, $step));
+						$index += 2 * $step;
 					}
 
 					$this->output[$position] = abs($total % 10);
 				}
-
 
 				$this->input = $this->output;
 
 				$phase++;
 			}
 
-			return implode("", array_slice($this->output, (int)implode("", array_slice($this->input, 0, 7)), 8));
+			return implode("", array_slice($this->output, 0, 8));
+		}
+
+
+		public function run()
+		{
+			return $this->{"part" . $this->part}();
 		}
 	}
 
-
-
-	$helper = new FFT();
-	$helper->load("123456");
+	$helper = new FFT(1);
+	$helper->load();
 
 	$result = $helper->run();
 
