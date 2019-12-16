@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "857a6d2b52511cbc201101380a6c35ba",
+    "content-hash": "bd6d6f63709818e0a88c7385c039f25e",
     "packages": [
         {
             "name": "cruxoft/bolt-core",
@@ -48,6 +48,94 @@
                 "framework"
             ],
             "time": "2019-11-10T16:06:59+00:00"
+        },
+        {
+            "name": "cruxoft/bolt-geojson",
+            "version": "0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/irwtdvoys/bolt-geojson.git",
+                "reference": "bd5232586e6f5dde9c99085875e485611487d6ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/irwtdvoys/bolt-geojson/zipball/bd5232586e6f5dde9c99085875e485611487d6ff",
+                "reference": "bd5232586e6f5dde9c99085875e485611487d6ff",
+                "shasum": ""
+            },
+            "require": {
+                "cruxoft/bolt-json": "^0.3.0"
+            },
+            "require-dev": {
+                "cruxoft/dump": "^0.2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bolt\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Adams",
+                    "role": "Developer"
+                }
+            ],
+            "description": "GeoJSON module for Bolt",
+            "keywords": [
+                "bolt",
+                "geojson"
+            ],
+            "time": "2019-09-01T11:46:31+00:00"
+        },
+        {
+            "name": "cruxoft/bolt-json",
+            "version": "0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/irwtdvoys/bolt-json.git",
+                "reference": "9068e249e616dc1e1d5a4aa7677f8c11c8725811"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/irwtdvoys/bolt-json/zipball/9068e249e616dc1e1d5a4aa7677f8c11c8725811",
+                "reference": "9068e249e616dc1e1d5a4aa7677f8c11c8725811",
+                "shasum": ""
+            },
+            "require": {
+                "cruxoft/bolt-core": "^0.8.0",
+                "ext-json": "*",
+                "php": "^7"
+            },
+            "require-dev": {
+                "cruxoft/dump": "^0.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bolt\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Adams",
+                    "role": "Developer"
+                }
+            ],
+            "description": "JSON wrapper library built on the Bolt Framework",
+            "keywords": [
+                "bolt",
+                "json"
+            ],
+            "time": "2019-11-10T16:13:59+00:00"
         },
         {
             "name": "cruxoft/logbook",
@@ -261,6 +349,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.4.0",
+        "ext-json": "*"
+    },
     "platform-dev": []
 }
