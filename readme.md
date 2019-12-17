@@ -63,3 +63,15 @@ Had to bump the max memory of the intcode VM but no other real issues.
 ##### Day 14
 
 Completed the first part recursively however part two would have taken ages to calculate to upgraded the system to allow for specifying multiples (not one at a time). This allowed estimation of the end goal and completed in just a few iterations.
+
+##### Day 15
+
+Calculated distance during explore for part 1. Part 2 didn't require anything new, just reset the counts and recorded map and let the explore run its course.
+
+##### Day 16
+
+Part one was simple enough however implemented solution wouldn't scale for part 2. Needed a hint for optimisation.
+
+##### Day 17
+
+Had to increase VM memory again. Solved part two by manually selecting the patterns for A/B/C couldn't see a simple way of calculating it.
