@@ -66,11 +66,11 @@ Completed the first part recursively however part two would have taken ages to c
 
 ##### Day 15
 
-Calculated distance during explore for part 1. Part 2 didn't require anything new, just reset the counts and recorded map and let the explore run its course.
+Used an exploring algorithm by following th left wall while marking distances to each tile in the map. The same code solved part two by resetting the map and counter once the oxygen system had been found. The map was lucky in that the oxygen system was at the end of a deadend.
 
 ##### Day 16
 
-Part one was simple enough however implemented solution wouldn't scale for part 2. Needed a hint for optimisation.
+Didn't see the correct solution to part two without a hint. The solution to part one was very much not scalable...
 
 ##### Day 17
 
