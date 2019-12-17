@@ -72,3 +72,6 @@ Used an exploring algorithm by following th left wall while marking distances to
 
 Didn't see the correct solution to part two without a hint. The solution to part one was very much not scalable...
 
+##### Day 17
+
+Had to increase VM memory again. Solved part two by manually selecting the patterns for A/B/C couldn't see a simple way of calculating it.
