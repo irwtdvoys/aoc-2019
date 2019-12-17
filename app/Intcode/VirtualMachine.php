@@ -209,7 +209,7 @@
 				return (int)$element;
 			}, explode(",", $string));
 
-			$this->memory = array_pad($this->memory, 3000, 0); // Todo: hardcoded upper limit on memory
+			$this->memory = array_pad($this->memory, 10000, 0); // Todo: hardcoded upper limit on memory
 		}
 
 		public function initialise(int $noun, int $verb): void
