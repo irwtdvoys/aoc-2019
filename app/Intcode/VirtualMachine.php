@@ -10,6 +10,7 @@
 	class VirtualMachine
 	{
 		public array $memory = array();
+		public array $initialMemory = array();
 		public bool $stopped = false;
 		public bool $paused = false;
 		public int $cursor = 0;
@@ -210,12 +211,24 @@
 			}, explode(",", $string));
 
 			$this->memory = array_pad($this->memory, 10000, 0); // Todo: hardcoded upper limit on memory
+			$this->initialMemory = $this->memory;
 		}
 
 		public function initialise(int $noun, int $verb): void
 		{
 			$this->memory[1] = $noun;
 			$this->memory[2] = $verb;
+		}
+
+		public function reset()
+		{
+			$this->memory = $this->initialMemory;
+			$this->stopped = false;
+			$this->paused = false;
+			$this->cursor = 0;
+			$this->inputs = array();
+			$this->output = "";
+			$this->relativeBase = 0;
 		}
 	}
 ?>
