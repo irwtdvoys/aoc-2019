@@ -75,3 +75,12 @@ Didn't see the correct solution to part two without a hint. The solution to part
 ##### Day 17
 
 Had to increase VM memory again. Solved part two by manually selecting the patterns for A/B/C couldn't see a simple way of calculating it.
+
+##### Day 18
+
+Yeah... WiP...
+
+##### Day 19
+
+Part one is pretty inefficient, calculation is done for every cell. Part two is much more efficient will calculate for only cells after the previous row and only until it finds the first match. It then checks for a diagonal match to signal beam is wide enough. 
+
