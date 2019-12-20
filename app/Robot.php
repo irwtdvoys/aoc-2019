@@ -53,7 +53,7 @@
 
 		public function load($override = null)
 		{
-			$path = ($override !== null) ? $override : ROOT . "data/11";
+			$path = ($override !== null) ? $override : ROOT . "data/11/input";
 
 			$this->computer->load($path);
 		}

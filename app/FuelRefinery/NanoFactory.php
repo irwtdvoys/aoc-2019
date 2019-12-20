@@ -18,7 +18,9 @@
 
 		public function load($override = null)
 		{
-			$data = ($override !== null) ? $override : (new Files())->load(ROOT . "data/14");
+			$filename = ($override !== null) ? $override : ROOT . "data/14/input";
+
+			$data = (new Files())->load($filename);
 
 			$reactions = explode(PHP_EOL, trim($data));
 

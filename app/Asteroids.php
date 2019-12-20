@@ -10,7 +10,7 @@
 
 		public function __construct()
 		{
-			$data = trim((new Files())->load(ROOT . "data/10"));
+			$data = trim((new Files())->load(ROOT . "data/10/input"));
 
 			$data = explode(PHP_EOL, $data);
 

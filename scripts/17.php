@@ -114,7 +114,7 @@
 
 		public function load()
 		{
-			$this->computer->load(ROOT . "data/17");
+			$this->computer->load(ROOT . "data/17/input");
 
 			// Part 2
 			$this->computer->memory[0] = 2;
