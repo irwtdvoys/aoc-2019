@@ -99,7 +99,7 @@
 
 		public function load()
 		{
-			$data = (new Files())->load(ROOT . "data/03");
+			$data = (new Files())->load(ROOT . "data/03/input");
 			$paths = explode("\n", trim($data));
 
 			foreach ($paths as $path)

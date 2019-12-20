@@ -11,7 +11,7 @@
 
 	$total = 0;
 
-	$raw = (new Files())->load(ROOT . "data/01");
+	$raw = (new Files())->load(ROOT . "data/01/input");
 	$data = array_filter(explode("\n", $raw));
 
 	foreach ($data as $mass)

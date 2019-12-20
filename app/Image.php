@@ -17,7 +17,9 @@
 
 		public function load(string $override = null): void
 		{
-			$data = isset($override) ? $override : trim((new Files())->load(ROOT . "data/08"));
+			$filename = ($override !== null) ? $override : ROOT . "data/08/input";
+
+			$data = trim((new Files())->load($filename));
 
 			$pixels = $this->width * $this->height;
 

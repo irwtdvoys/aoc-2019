@@ -6,7 +6,7 @@
 	include_once(ROOT . "bin/init.php");
 
 	$helper = new NanoFactory();
-	$helper->load();
+	$helper->load(ROOT . "data/14/examples/3");
 	$result = $helper->run(2);
 
 	echo($result . PHP_EOL);

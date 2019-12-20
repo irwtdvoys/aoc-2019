@@ -10,7 +10,7 @@
 	// Sample: 3500
 	$helper->setProgram("1,9,10,3,2,3,11,0,99,30,40,50");
 
-	#$helper->load(ROOT . "data/02");
+	#$helper->load(ROOT . "data/02/input");
 
 	// Part 1: 3166704
 	#$helper->initialise(12, 2);

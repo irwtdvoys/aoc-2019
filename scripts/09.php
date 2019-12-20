@@ -11,7 +11,7 @@
 	#$helper->setProgram("1102,34915192,34915192,7,4,7,99,0");
 	#$helper->setProgram("104,1125899906842624,99");
 
-	$helper->load(ROOT . "data/09");
+	$helper->load(ROOT . "data/09/input");
 	$result = $helper->run();
 
 	echo($result);
