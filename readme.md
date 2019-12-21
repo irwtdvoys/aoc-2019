@@ -84,3 +84,10 @@ Yeah... WiP...
 
 Part one is pretty inefficient, calculation is done for every cell. Part two is much more efficient will calculate for only cells after the previous row and only until it finds the first match. It then checks for a diagonal match to signal beam is wide enough. 
 
+##### Day 20
+
+Don't have enough time to do these mazes =/ Will come back to them...
+
+##### Day 21
+
+Calculated the SpringScript by hand, probably not the most efficient (takes a couple of seconds for part 2) but heavy reuse of previous days (intcode VM and Ascii Processing).
