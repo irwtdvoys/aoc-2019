@@ -26,7 +26,7 @@
 
 		public function load($override = null)
 		{
-			$data = ($override !== null) ? $override : trim((new Files())->load(ROOT . "data/12"));
+			$data = ($override !== null) ? $override : trim((new Files())->load(ROOT . "data/12/input"));
 
 			$positions = explode(PHP_EOL, $data);
 

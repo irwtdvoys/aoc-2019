@@ -167,7 +167,7 @@
 		public function load()
 		{
 			$this->vm = new VirtualMachine(true);
-			$this->vm->load(ROOT . "data/15");
+			$this->vm->load(ROOT . "data/15/input");
 		}
 
 		public function explore()

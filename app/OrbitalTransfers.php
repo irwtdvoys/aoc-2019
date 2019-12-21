@@ -13,7 +13,8 @@
 
 		public function load(string $override = null)
 		{
-			$data = (!isset($override)) ? (new Files())->load(ROOT . "data/06") : $override;
+			$filename = isset($override) ? $override : ROOT . "data/06/input";
+			$data = (new Files())->load($filename);
 
 			$lines = explode(PHP_EOL, trim($data));
 

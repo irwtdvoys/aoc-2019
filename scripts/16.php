@@ -26,7 +26,7 @@
 
 		public function load(string $input = null)
 		{
-			$data = ($input !== null) ? $input : trim((new Files())->load(ROOT . "data/16"));
+			$data = ($input !== null) ? $input : trim((new Files())->load(ROOT . "data/16/input"));
 
 			$multiplier = ($this->part === 1) ? 1 : 10000;
 

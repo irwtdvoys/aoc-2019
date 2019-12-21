@@ -1,4 +1,5 @@
 <?php
+	use App\AsciiProcessor;
 	use App\Intcode\VirtualMachine;
 	use App\Utils\Directions;
 	use App\Utils\Position2d;
@@ -114,14 +115,15 @@
 
 		public function load()
 		{
-			$this->computer->load(ROOT . "data/17");
+			$this->computer->load(ROOT . "data/17/input");
 
 			// Part 2
 			$this->computer->memory[0] = 2;
 
 			$output = $this->computer->run($this->generate());
-			dump($output);
-die();
+
+			echo(AsciiProcessor::output($output));
+			die();
 			$output = explode(PHP_EOL, trim($output));
 
 			$output = array_map(
@@ -308,17 +310,7 @@ R,8,L,12,L,12,R,8
 L,6,R,6,L,12
 n
 ";
-
-			$encoded = array();
-
-			$split = str_split($raw, 1);
-
-			foreach ($split as $next)
-			{
-				$encoded[] = ord($next);
-			}
-
-			return $encoded;
+			return AsciiProcessor::encode($raw);
 		}
 	}
 

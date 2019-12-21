@@ -6,7 +6,7 @@
 	use App\Intcode\VirtualMachine;
 
 	$helper = new VirtualMachine();
-	$helper->load(ROOT . "data/05");
+	$helper->load(ROOT . "data/05/input");
 	$result = $helper->run();
 
 	echo($result);

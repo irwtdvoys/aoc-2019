@@ -19,10 +19,12 @@
 			$this->board[0] = array();
 		}
 
-		public function load()
+		public function load($override = null)
 		{
+			$filename = ($override !== null) ? $override : ROOT . "data/13/input";
+
 			$this->computer = new VirtualMachine(true);
-			$this->computer->load(ROOT . "data/13");
+			$this->computer->load($filename);
 		}
 
 		public function run($part = 1)
