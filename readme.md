@@ -91,3 +91,7 @@ Don't have enough time to do these mazes =/ Will come back to them...
 ##### Day 21
 
 Calculated the SpringScript by hand, probably not the most efficient (takes a couple of seconds for part 2) but heavy reuse of previous days (intcode VM and Ascii Processing).
+
+##### Day 22
+
+Part one was fairly straight forward, the number theory in part two means the current solution is probably not capable of solving before the heat death of the universe...
