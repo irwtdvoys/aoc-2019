@@ -213,7 +213,13 @@
 			}
 		}
 
-		public function run(array $inputs = []): ?string
+		public function step()
+		{
+			$instruction = $this->nextInstruction();
+			$this->processInstruction($instruction);
+		}
+
+		public function run(array $inputs = []): array
 		{
 			if ($this->stopped === true)
 			{
@@ -226,8 +232,7 @@
 
 			while (!$this->stopped && !$this->paused)
 			{
-				$instruction = $this->nextInstruction();
-				$this->processInstruction($instruction);
+				$this->step();
 			}
 
 			return $this->output;
