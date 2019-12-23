@@ -12,9 +12,9 @@
 	#$helper->setProgram("104,1125899906842624,99");
 
 	$helper->load(ROOT . "data/09/input");
-	$result = $helper->run();
+	$helper->run();
 
-	echo($result);
+	echo($helper->output());
 
 	// Part 1: 3497884671
 	// Part 2: 46470
