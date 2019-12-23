@@ -215,7 +215,7 @@
 
 		public function output(): string
 		{
-			return $this->output;
+			return implode(PHP_EOL, $this->output) . PHP_EOL;
 		}
 
 		public function setProgram(string $string): void
