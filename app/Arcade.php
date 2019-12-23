@@ -31,7 +31,7 @@
 		{
 			if ($part === 2)
 			{
-				$this->computer->memory[0] = 2;
+				$this->computer->memory->set(0, 2);
 			}
 
 			$count = 0;

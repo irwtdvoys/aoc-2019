@@ -20,7 +20,7 @@
 
 	$helper->run();
 
-	echo($helper->memory[0] . PHP_EOL);
+	echo($helper->memory->get(0) . PHP_EOL);
 
 	// $noun++ = +243000
 	// $verb++ = +1
