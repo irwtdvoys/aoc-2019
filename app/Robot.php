@@ -188,7 +188,7 @@
 			{
 				for ($x = $bounds[0][0]; $x <= $bounds[1][0]; $x++)
 				{
-					echo($this->data($x, $y) === Colours::WHITE ? Colourer::colour("█", Colourer::GRAY) : " ");
+					echo($this->data($x, $y) === Colours::WHITE ? Colourer::colour("█", Colourer::WHITE) : " ");
 				}
 
 				echo(PHP_EOL);
