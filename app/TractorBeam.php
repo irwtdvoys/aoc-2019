@@ -2,7 +2,7 @@
 
 	namespace App;
 
-	use App\Intcode\VirtualMachine;
+	use App\Intcode\ResettableVirtualMachine as VirtualMachine;
 
 	class TractorBeam
 	{

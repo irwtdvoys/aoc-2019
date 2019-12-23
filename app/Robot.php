@@ -1,6 +1,7 @@
 <?php
 	namespace App;
 
+	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
 	use App\Utils\Directions;
 	use Bolt\Enum;
@@ -36,7 +37,7 @@
 
 			$this->painted = array();
 
-			$this->computer = new VirtualMachine(true);
+			$this->computer = new VirtualMachine(InterruptTypes::OUTPUT);
 		}
 
 		public function data(int $x, int $y, int $value = null): ?int
@@ -119,6 +120,13 @@
 			}
 		}
 
+		public function fetch($current)
+		{
+			$result = $this->computer->run($current);
+
+			return ($result !== array()) ? $result[0] : null;
+		}
+
 		public function run($part = 1)
 		{
 			if ($part === 2)
@@ -135,8 +143,8 @@
 
 				try
 				{
-					$colour = (int)$this->computer->run($current);
-					$direction = (int)$this->computer->run($current);
+					$colour = $this->fetch($current);
+					$direction = $this->fetch($current);
 				}
 				catch (Exception $exception)
 				{

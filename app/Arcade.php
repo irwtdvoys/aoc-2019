@@ -2,6 +2,7 @@
 	namespace App;
 
 	use App\BreakoutTiles as Tiles;
+	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
 	use App\Utils\Position2d;
 	use Exception;
@@ -23,7 +24,7 @@
 		{
 			$filename = ($override !== null) ? $override : ROOT . "data/13/input";
 
-			$this->computer = new VirtualMachine(true);
+			$this->computer = new VirtualMachine(InterruptTypes::INPUT);
 			$this->computer->load($filename);
 		}
 
@@ -31,7 +32,7 @@
 		{
 			if ($part === 2)
 			{
-				$this->computer->memory[0] = 2;
+				$this->computer->memory->set(0, 2);
 			}
 
 			$count = 0;
@@ -43,24 +44,29 @@
 			{
 				try
 				{
-					$x = (int)$this->computer->run($input);
-					$y = (int)$this->computer->run();
-					$code = (int)$this->computer->run();
+					$data = $this->computer->run($input);
 
-					switch ($code)
+					$chunks = array_chunk($data, 3);
+
+					foreach ($chunks as $chunk)
 					{
-						case Tiles::BLOCK:
-							$count++;
-							break;
-						case Tiles::PADDLE:
-							$this->paddle = new Position2d($x, $y);
-							break;
-						case Tiles::BALL:
-							$this->ball = new Position2d($x, $y);
-							break;
-					}
+						list($x, $y, $code) = $chunk;
 
-					$this->board[$x][$y] = $code;
+						switch ($code)
+						{
+							case Tiles::BLOCK:
+								$count++;
+								break;
+							case Tiles::PADDLE:
+								$this->paddle = new Position2d($x, $y);
+								break;
+							case Tiles::BALL:
+								$this->ball = new Position2d($x, $y);
+								break;
+						}
+
+						$this->board[$x][$y] = $code;
+					}
 
 					$input = $this->inputDirection();
 				}
@@ -75,8 +81,6 @@
 
 				$loop++;
 			}
-
-			#echo($loop . PHP_EOL);
 
 			switch ($part)
 			{
