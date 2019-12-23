@@ -4,6 +4,7 @@
 	use App\BreakoutTiles as Tiles;
 	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
+	use App\Utils\Colours;
 	use App\Utils\Position2d;
 	use Exception;
 
@@ -146,16 +147,16 @@
 							$value = " ";
 							break;
 						case Tiles::WALL:
-							$value = "W";
+							$value = Colours::colour("█", Colours::YELLOW);
 							break;
 						case Tiles::BLOCK:
-							$value = "X";
+							$value = Colours::colour("█", Colours::BLUE);
 							break;
 						case Tiles::PADDLE:
-							$value = "_";
+							$value = "━";
 							break;
 						case Tiles::BALL:
-							$value = "O";
+							$value = "●";
 							break;
 						default:
 							$value = $element;
