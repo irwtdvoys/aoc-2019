@@ -1,6 +1,8 @@
 <?php
 	namespace App\Intcode;
 
+	use App\Intcode\VM\Memory;
+
 	class ResettableVirtualMachine extends VirtualMachine
 	{
 		public Memory $initialMemory;
@@ -18,8 +20,8 @@
 			$this->stopped = false;
 			$this->paused = false;
 			$this->cursor = 0;
-			$this->inputs = array();
-			$this->output = "";
+			$this->inputs->clear();
+			$this->output = array();
 			$this->relativeBase = 0;
 		}
 	}
