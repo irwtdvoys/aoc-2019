@@ -1,6 +1,7 @@
 <?php
 	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
+	use App\Utils\Colours;
 	use App\Utils\Position2d;
 	use Bolt\GeoJson\Geometry\Envelope;
 	use Bolt\GeoJson\Geometry\Point;
@@ -294,20 +295,20 @@
 			{
 				for ($x = $this->robot->bounds->left() - 1; $x < $this->robot->bounds->right() + 2; $x++)
 				{
-					$result = ".";
+					$result = " ";
 
 					if (isset($this->map[$x][$y]))
 					{
 						switch ($this->map[$x][$y]->type)
 						{
 							case Tiles::WALL:
-								$result = "X";
+								$result = Colours::colour("█", Colours::BLUE);
 								break;
 							case Tiles::PATH:
-								$result = " ";
+								$result = Colours::colour("█", Colours::WHITE);
 								break;
 							case Tiles::SYSTEM:
-								$result = "O";
+								$result = Colours::colour("█", Colours::RED);
 								break;
 							default:
 								$result = "!";
@@ -316,7 +317,7 @@
 
 						if ($x == 0 && $y == 0)
 						{
-							$result = "S";
+							$result = Colours::colour("█", Colours::GREEN);
 						}
 					}
 

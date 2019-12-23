@@ -3,6 +3,7 @@
 
 	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
+	use App\Utils\Colours as Colourer;
 	use App\Utils\Directions;
 	use Bolt\Enum;
 	use Exception;
@@ -187,7 +188,7 @@
 			{
 				for ($x = $bounds[0][0]; $x <= $bounds[1][0]; $x++)
 				{
-					echo($this->data($x, $y) === Colours::WHITE ? "X" : " ");
+					echo($this->data($x, $y) === Colours::WHITE ? Colourer::colour("█", Colourer::WHITE) : " ");
 				}
 
 				echo(PHP_EOL);
