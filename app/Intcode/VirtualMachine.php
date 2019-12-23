@@ -32,8 +32,8 @@
 
 		public function __construct(int $interrupts = Interrupts::NONE)
 		{
-			$this->memory = new Memory();
 			$this->inputs = new Inputs();
+			$this->memory = new Memory();
 
 			$this->interrupt = (object)array(
 				"type" => $interrupts,
@@ -43,8 +43,10 @@
 
 		public function __clone()
 		{
-			$this->memory = clone $this->memory;
 			$this->inputs = clone $this->inputs;
+			$this->memory = clone $this->memory;
+
+			$this->interrupt = clone $this->interrupt;
 		}
 
 		public function load(string $filename = "input.txt"): void
