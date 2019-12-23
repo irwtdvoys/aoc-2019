@@ -7,7 +7,8 @@
 
 	$helper = new VirtualMachine();
 	$helper->load(ROOT . "data/05/input");
-	$result = $helper->run();
+	$helper->run();
+	$result = $helper->output();
 
 	echo($result);
 

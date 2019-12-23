@@ -1,4 +1,5 @@
 <?php
+	use App\Intcode\Interrupts;
 	use App\Intcode\VirtualMachine;
 	use App\Utils\Position2d;
 	use Bolt\GeoJson\Geometry\Envelope;
@@ -166,7 +167,7 @@
 
 		public function load()
 		{
-			$this->vm = new VirtualMachine(true);
+			$this->vm = new VirtualMachine(Interrupts::OUTPUT);
 			$this->vm->load(ROOT . "data/15/input");
 		}
 
@@ -177,7 +178,7 @@
 			while ($loop < 3196) // Todo: better end
 			{
 				$input = $this->robot->left();
-				$result = $this->vm->run([$input]);
+				$result = $this->vm->run([$input])[0];
 
 				switch ($result)
 				{
