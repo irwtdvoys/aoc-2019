@@ -38,12 +38,12 @@
 
 				$output = $this->amps[$count]->run($inputs);
 
-				if ($output === "")
+				if (count($output) === 0)
 				{
 					return $result;
 				}
 
-				$result = (int)$output;
+				$result = $output[0];
 
 				$count++;
 

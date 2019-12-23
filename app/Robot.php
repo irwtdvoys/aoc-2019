@@ -119,6 +119,13 @@
 			}
 		}
 
+		public function fetch($current)
+		{
+			$result = $this->computer->run($current);
+
+			return ($result !== array()) ? $result[0] : null;
+		}
+
 		public function run($part = 1)
 		{
 			if ($part === 2)
@@ -135,8 +142,8 @@
 
 				try
 				{
-					$colour = (int)$this->computer->run($current);
-					$direction = (int)$this->computer->run($current);
+					$colour = $this->fetch($current);
+					$direction = $this->fetch($current);
 				}
 				catch (Exception $exception)
 				{

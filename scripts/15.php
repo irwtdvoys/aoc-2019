@@ -177,7 +177,7 @@
 			while ($loop < 3196) // Todo: better end
 			{
 				$input = $this->robot->left();
-				$result = $this->vm->run([$input]);
+				$result = $this->vm->run([$input])[0];
 
 				switch ($result)
 				{
