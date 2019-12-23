@@ -3,19 +3,12 @@
 
 	use App\Intcode\VM\Inputs;
 	use App\Intcode\VM\Instruction;
+	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VM\Memory;
 	use App\Intcode\VM\Modes;
 	use App\Intcode\VM\Parameter;
-	use Bolt\Enum;
 	use Bolt\Files;
 	use Exception;
-
-	class Interrupts extends Enum
-	{
-		const NONE = 0;
-		const OUTPUT = 1;
-		const INPUT = 2;
-	}
 
 	class VirtualMachine
 	{
@@ -30,21 +23,23 @@
 
 		public object $interrupt;
 
-		public function __construct(int $interrupts = Interrupts::NONE)
+		public function __construct(int $interrupts = InterruptTypes::NONE)
 		{
-			$this->memory = new Memory();
 			$this->inputs = new Inputs();
+			$this->memory = new Memory();
 
 			$this->interrupt = (object)array(
 				"type" => $interrupts,
-				"allow" => ($interrupts === Interrupts::NONE) ? false : true
+				"allow" => ($interrupts === InterruptTypes::NONE) ? false : true
 			);
 		}
 
 		public function __clone()
 		{
-			$this->memory = clone $this->memory;
 			$this->inputs = clone $this->inputs;
+			$this->memory = clone $this->memory;
+
+			$this->interrupt = clone $this->interrupt;
 		}
 
 		public function load(string $filename = "input.txt"): void
@@ -82,7 +77,7 @@
 			return $value;
 		}
 
-		private function getPosition(Parameter $parameter)
+		private function getPosition(Parameter $parameter): int
 		{
 			switch ($parameter->mode)
 			{
@@ -136,7 +131,7 @@
 				case 3:
 					// Opcode 3 takes a single integer as input and saves it to the position given by its only parameter. For example, the instruction 3,50 would take an input value and store it at address 50.
 
-					if ($this->interrupt->type === Interrupts::INPUT && $this->interrupt->allow)
+					if ($this->interrupt->type === InterruptTypes::INPUT && $this->interrupt->allow)
 					{
 						$this->paused = true;
 						$this->cursor -= count($instruction->parameters) + 1;
@@ -162,7 +157,7 @@
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
 					$this->output[] = $this->getValue($instruction->parameters[0]);
 
-					if ($this->interrupt->type === Interrupts::OUTPUT && $this->interrupt->allow)
+					if ($this->interrupt->type === InterruptTypes::OUTPUT && $this->interrupt->allow)
 					{
 						$this->paused = true;
 					}
@@ -213,7 +208,7 @@
 			}
 		}
 
-		public function step()
+		public function step(): void
 		{
 			$instruction = $this->nextInstruction();
 			$this->processInstruction($instruction);

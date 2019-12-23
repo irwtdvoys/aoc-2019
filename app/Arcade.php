@@ -2,7 +2,7 @@
 	namespace App;
 
 	use App\BreakoutTiles as Tiles;
-	use App\Intcode\Interrupts;
+	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
 	use App\Utils\Position2d;
 	use Exception;
@@ -24,7 +24,7 @@
 		{
 			$filename = ($override !== null) ? $override : ROOT . "data/13/input";
 
-			$this->computer = new VirtualMachine(Interrupts::INPUT);
+			$this->computer = new VirtualMachine(InterruptTypes::INPUT);
 			$this->computer->load($filename);
 		}
 
@@ -81,8 +81,6 @@
 
 				$loop++;
 			}
-
-			#echo($loop . PHP_EOL);
 
 			switch ($part)
 			{
