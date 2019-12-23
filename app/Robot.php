@@ -1,7 +1,7 @@
 <?php
 	namespace App;
 
-	use App\Intcode\Interrupts;
+	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
 	use App\Utils\Directions;
 	use Bolt\Enum;
@@ -37,7 +37,7 @@
 
 			$this->painted = array();
 
-			$this->computer = new VirtualMachine(Interrupts::OUTPUT);
+			$this->computer = new VirtualMachine(InterruptTypes::OUTPUT);
 		}
 
 		public function data(int $x, int $y, int $value = null): ?int

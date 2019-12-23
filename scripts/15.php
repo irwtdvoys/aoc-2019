@@ -1,5 +1,5 @@
 <?php
-	use App\Intcode\Interrupts;
+	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
 	use App\Utils\Position2d;
 	use Bolt\GeoJson\Geometry\Envelope;
@@ -167,7 +167,7 @@
 
 		public function load()
 		{
-			$this->vm = new VirtualMachine(Interrupts::OUTPUT);
+			$this->vm = new VirtualMachine(InterruptTypes::OUTPUT);
 			$this->vm->load(ROOT . "data/15/input");
 		}
 
