@@ -84,7 +84,7 @@
 			return $value;
 		}
 
-		private function getPosition(Parameter $parameter)
+		private function getPosition(Parameter $parameter): int
 		{
 			switch ($parameter->mode)
 			{
@@ -215,7 +215,7 @@
 			}
 		}
 
-		public function step()
+		public function step(): void
 		{
 			$instruction = $this->nextInstruction();
 			$this->processInstruction($instruction);
