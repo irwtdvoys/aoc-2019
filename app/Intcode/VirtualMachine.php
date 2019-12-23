@@ -6,8 +6,16 @@
 	use App\Intcode\VM\Memory;
 	use App\Intcode\VM\Modes;
 	use App\Intcode\VM\Parameter;
+	use Bolt\Enum;
 	use Bolt\Files;
 	use Exception;
+
+	class Interrupts extends Enum
+	{
+		const NONE = 0;
+		const OUTPUT = 1;
+		const INPUT = 2;
+	}
 
 	class VirtualMachine
 	{
@@ -20,13 +28,17 @@
 		public array $output = array();
 		public int $relativeBase = 0;
 
-		public bool $allowInterrupts = false;
+		public object $interrupt;
 
-		public function __construct(bool $interrupts = false)
+		public function __construct(int $interrupts = Interrupts::NONE)
 		{
-			$this->allowInterrupts = $interrupts;
 			$this->memory = new Memory();
 			$this->inputs = new Inputs();
+
+			$this->interrupt = (object)array(
+				"type" => $interrupts,
+				"allow" => ($interrupts === Interrupts::NONE) ? false : true
+			);
 		}
 
 		public function __clone()
@@ -124,6 +136,13 @@
 				case 3:
 					// Opcode 3 takes a single integer as input and saves it to the position given by its only parameter. For example, the instruction 3,50 would take an input value and store it at address 50.
 
+					if ($this->interrupt->type === Interrupts::INPUT && $this->interrupt->allow)
+					{
+						$this->paused = true;
+						$this->cursor -= count($instruction->parameters) + 1;
+						$this->interrupt->allow = false;
+					}
+					else
 					{
 						try
 						{
@@ -136,13 +155,14 @@
 						}
 
 						$this->memory->set($this->getPosition($instruction->parameters[0]), $value);
+						$this->interrupt->allow = true;
 					}
 					break;
 				case 4:
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
 					$this->output[] = $this->getValue($instruction->parameters[0]);
 
-					if ($this->allowInterrupts === true)
+					if ($this->interrupt->type === Interrupts::OUTPUT && $this->interrupt->allow)
 					{
 						$this->paused = true;
 					}
