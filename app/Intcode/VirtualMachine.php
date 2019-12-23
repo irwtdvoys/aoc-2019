@@ -136,6 +136,13 @@
 				case 3:
 					// Opcode 3 takes a single integer as input and saves it to the position given by its only parameter. For example, the instruction 3,50 would take an input value and store it at address 50.
 
+					if ($this->interrupt->type === Interrupts::INPUT && $this->interrupt->allow)
+					{
+						$this->paused = true;
+						$this->cursor -= count($instruction->parameters) + 1;
+						$this->interrupt->allow = false;
+					}
+					else
 					{
 						try
 						{
@@ -148,6 +155,7 @@
 						}
 
 						$this->memory->set($this->getPosition($instruction->parameters[0]), $value);
+						$this->interrupt->allow = true;
 					}
 					break;
 				case 4:
