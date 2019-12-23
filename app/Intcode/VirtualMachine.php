@@ -10,8 +10,8 @@
 
 	class VirtualMachine
 	{
-		public array $initialMemory = array();
 		public Memory $memory;
+
 		public bool $stopped = false;
 		public bool $paused = false;
 		public int $cursor = 0;
@@ -220,23 +220,11 @@
 				return (int)$element;
 			}, explode(",", $string));
 
-			$this->initialMemory = $this->memory;
 			$this->memory->load($memory);
 		}
 
 		public function initialise(int $noun, int $verb): void
 		{
-		}
-
-		public function reset()
-		{
-			$this->memory = $this->initialMemory;
-			$this->stopped = false;
-			$this->paused = false;
-			$this->cursor = 0;
-			$this->inputs = array();
-			$this->output = "";
-			$this->relativeBase = 0;
 			$this->memory->set(1, $noun);
 			$this->memory->set(2, $verb);
 		}
