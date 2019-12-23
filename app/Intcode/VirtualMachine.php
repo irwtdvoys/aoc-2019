@@ -17,7 +17,7 @@
 		public bool $stopped = false;
 		public bool $paused = false;
 		public int $cursor = 0;
-		public string $output = "";
+		public array $output = array();
 		public int $relativeBase = 0;
 
 		public bool $allowInterrupts = false;
@@ -140,7 +140,7 @@
 					break;
 				case 4:
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
-					$this->output .= $this->getValue($instruction->parameters[0]) . PHP_EOL;
+					$this->output[] = $this->getValue($instruction->parameters[0]);
 
 					if ($this->allowInterrupts === true)
 					{
@@ -201,8 +201,8 @@
 			}
 
 			$this->paused = false;
-			$this->output = "";
 			$this->inputs->set($inputs);
+			$this->output = array();
 
 			while (!$this->stopped && !$this->paused)
 			{
@@ -210,7 +210,7 @@
 				$this->processInstruction($instruction);
 			}
 
-			return $this->output();
+			return $this->output;
 		}
 
 		public function output(): string
