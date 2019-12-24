@@ -1,6 +1,7 @@
 <?php
 	use Bolt\Enum;
 	use Bolt\Files;
+	use Bolt\Json;
 
 	define("ROOT", __DIR__ . "/../");
 
@@ -67,9 +68,24 @@
 					$count = 0;
 
 					// WiP
-					if (isset($this->map[$x - 1][$y]) && $this->map[$x][$y]->state === Tile::BUG)
+					if (isset($this->map[$x - 1][$y]) && $this->map[$x - 1][$y]->state === Tile::BUG)
 					{
-						$count++
+						$count++;
+					}
+
+					if (isset($this->map[$x + 1][$y]) && $this->map[$x + 1][$y]->state === Tile::BUG)
+					{
+						$count++;
+					}
+
+					if (isset($this->map[$x][$y - 1]) && $this->map[$x][$y - 1]->state === Tile::BUG)
+					{
+						$count++;
+					}
+
+					if (isset($this->map[$x][$y + 1]) && $this->map[$x][$y + 1]->state === Tile::BUG)
+					{
+						$count++;
 					}
 
 					$this->map[$x][$y]->count = $count;
@@ -119,21 +135,89 @@
 
 		public function run()
 		{
-			$loop = 0;
+			$this->draw();
+			$this->remember();
 
-			while ($loop < 5)
+			$loop = 1;
+
+			while (true)
 			{
 				$this->process();
 				$this->draw();
 
+				try
+				{
+					$this->remember();
+				}
+				catch (Exception $exception)
+				{
+					echo("Iteration: " . $loop . PHP_EOL);
+					dump($this->rating());
+					die();
+				}
+
 				$loop++;
 			}
+		}
+
+		public function remember()
+		{
+			$identifier = $this->encode();
+
+			if (in_array($identifier, $this->history))
+			{
+				throw new Exception("State exists");
+			}
+
+			$this->history[] = $identifier;
+		}
+
+		public function encode()
+		{
+			$index = 0;
+			$result = 0;
+
+			foreach ($this->map as $column)
+			{
+				foreach ($column as $tile)
+				{
+					if ($tile->state === Tile::BUG)
+					{
+						$result |= 1 << $index;
+					}
+
+					$index++;
+				}
+			}
+
+			return $result;
+		}
+
+		public function rating()
+		{
+			$index = 0;
+			$rating = 0;
+
+			for ($y = 0; $y < count($this->map[0]); $y++)
+			{
+				for ($x = 0; $x < count($this->map); $x++)
+				{
+					if ($this->map[$x][$y]->state === Tile::BUG)
+					{
+						$rating += pow(2, $index);
+					}
+
+					$index++;
+				}
+			}
+
+			return $rating;
 		}
 	}
 
 
 	$helper = new LifeSpace();
-	$helper->load(ROOT . "data/24/examples/01");
+	$helper->load(/*ROOT . "data/24/examples/01"*/);
 	$helper->run();
 
 	die();
