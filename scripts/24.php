@@ -28,6 +28,8 @@
 		public array $map;
 		public array $history;
 
+		public object $grid;
+
 		public function __construct()
 		{
 			$this->map = array(
@@ -43,27 +45,31 @@
 			$data = trim((new Files())->load($filename));
 			$rows = explode(PHP_EOL, $data);
 
-			$count = 0;
+			$max = (count($rows) - 1) / 2;
+			$min = 0 - $max;
 
-			for ($y = 0; $y < count($rows); $y++)
+			$this->grid = (object)array(
+				"min" => $min,
+				"max" => $max
+			);
+
+			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 			{
-				$characters = str_split($rows[$y], 1);
+				$characters = str_split($rows[$y + 2], 1);
 
-				for ($x = 0; $x < count($characters); $x++)
+				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 				{
-					$this->map[$x][$y] = new Tile($characters[$x]);
+					$this->map[$x][$y] = new Tile($characters[$x + 2]);
 				}
-
-				$count++;
 			}
 		}
 
 		public function process()
 		{
 			// counts
-			for ($y = 0; $y < count($this->map[0]); $y++)
+			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 			{
-				for ($x = 0; $x < count($this->map); $x++)
+				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 				{
 					$count = 0;
 
@@ -93,9 +99,9 @@
 			}
 
 			// apply
-			for ($y = 0; $y < count($this->map[0]); $y++)
+			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 			{
-				for ($x = 0; $x < count($this->map); $x++)
+				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 				{
 					switch ($this->map[$x][$y]->state)
 					{
@@ -120,9 +126,9 @@
 
 		public function draw()
 		{
-			for ($y = 0; $y < count($this->map[0]); $y++)
+			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 			{
-				for ($x = 0; $x < count($this->map); $x++)
+				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 				{
 					echo($this->map[$x][$y]->state);
 				}
@@ -151,9 +157,7 @@
 				}
 				catch (Exception $exception)
 				{
-					echo("Iteration: " . $loop . PHP_EOL);
-					dump($this->rating());
-					die();
+					return $this->rating();
 				}
 
 				$loop++;
@@ -198,9 +202,9 @@
 			$index = 0;
 			$rating = 0;
 
-			for ($y = 0; $y < count($this->map[0]); $y++)
+			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 			{
-				for ($x = 0; $x < count($this->map); $x++)
+				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 				{
 					if ($this->map[$x][$y]->state === Tile::BUG)
 					{
@@ -218,16 +222,10 @@
 
 	$helper = new LifeSpace();
 	$helper->load(/*ROOT . "data/24/examples/01"*/);
-	$helper->run();
-
-	die();
-	dump($helper);
-
-
-	$result = "";
+	$result = $helper->run();
 
 	echo($result . PHP_EOL);
 
-	// Part 1: 17714
-	// Part 2: 10982
+	// Part 1: 10282017
+	// Part 2:
 ?>
