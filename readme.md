@@ -95,3 +95,11 @@ Calculated the SpringScript by hand, probably not the most efficient (takes a co
 ##### Day 22
 
 Part one was fairly straight forward, the number theory in part two means the current solution is probably not capable of solving before the heat death of the universe...
+
+##### Day 23
+
+Current intcode implementation could handle the system well once a "step" was added to allow for fake parallel running. 
+
+##### Day 24
+
+Fun task, the data structure for part two wasn't as complex as first though once the recursion was treated as a layer change.
