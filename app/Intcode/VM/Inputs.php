@@ -1,6 +1,8 @@
 <?php
 	namespace App\Intcode\VM;
 
+	use Exception;
+
 	class Inputs
 	{
 		private array $data = array();
