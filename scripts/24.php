@@ -15,7 +15,7 @@
 		public int $count;
 		public string $state;
 
-		public function __construct(string $state)
+		public function __construct(string $state = self::EMPTY)
 		{
 			$this->count = 0;
 			$this->state = $state;
@@ -24,18 +24,50 @@
 
 	class LifeSpace
 	{
-		/** @var Tile[][] */
-		public array $map;
+		/** @var Tile[][][] */
+		public array $map = array();
 		public array $history;
 
 		public object $grid;
+		public int $part;
 
-		public function __construct()
+		public function __construct($part = 1)
 		{
-			$this->map = array(
+			$this->part = $part;
+			$this->map = array();
+			$this->history = array();
+		}
+
+		public function initialise()
+		{
+			if ($this->part === 1)
+			{
+				$this->addLayer(0);
+			}
+			else
+			{
+				for ($loop = -200; $loop <= 200; $loop++)
+				{
+					$this->addLayer($loop);
+				}
+			}
+		}
+
+		public function addLayer(int $index)
+		{
+			$layer = array(
 				array()
 			);
-			$this->history = array();
+
+			for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
+			{
+				for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
+				{
+					$layer[$x][$y] = new Tile();
+				}
+			}
+
+			$this->map[$index] = $layer;
 		}
 
 		public function load(string $override = null)
@@ -53,13 +85,15 @@
 				"max" => $max
 			);
 
+			$this->initialise();
+
 			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 			{
 				$characters = str_split($rows[$y + 2], 1);
 
 				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 				{
-					$this->map[$x][$y] = new Tile($characters[$x + 2]);
+					$this->map[0][$x][$y]->state = $characters[$x + 2];
 				}
 			}
 		}
@@ -67,76 +101,87 @@
 		public function process()
 		{
 			// counts
-			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
+			foreach ($this->map as $index => $data)
 			{
-				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
+				for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 				{
-					$count = 0;
-
-					// WiP
-					if (isset($this->map[$x - 1][$y]) && $this->map[$x - 1][$y]->state === Tile::BUG)
+					for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 					{
-						$count++;
-					}
+						$count = 0;
 
-					if (isset($this->map[$x + 1][$y]) && $this->map[$x + 1][$y]->state === Tile::BUG)
-					{
-						$count++;
-					}
+						if (isset($this->map[$index][$x - 1][$y]) && $this->map[$index][$x - 1][$y]->state === Tile::BUG)
+						{
+							$count++;
+						}
 
-					if (isset($this->map[$x][$y - 1]) && $this->map[$x][$y - 1]->state === Tile::BUG)
-					{
-						$count++;
-					}
+						if (isset($this->map[$index][$x + 1][$y]) && $this->map[$index][$x + 1][$y]->state === Tile::BUG)
+						{
+							$count++;
+						}
 
-					if (isset($this->map[$x][$y + 1]) && $this->map[$x][$y + 1]->state === Tile::BUG)
-					{
-						$count++;
-					}
+						if (isset($this->map[$index][$x][$y - 1]) && $this->map[$index][$x][$y - 1]->state === Tile::BUG)
+						{
+							$count++;
+						}
 
-					$this->map[$x][$y]->count = $count;
+						if (isset($this->map[$index][$x][$y + 1]) && $this->map[$index][$x][$y + 1]->state === Tile::BUG)
+						{
+							$count++;
+						}
+
+						$this->map[$index][$x][$y]->count = $count;
+					}
 				}
 			}
 
 			// apply
-			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
+			foreach ($this->map as $index => $data)
 			{
-				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
+				for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 				{
-					switch ($this->map[$x][$y]->state)
+					for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 					{
-						case Tile::EMPTY:
-							if ($this->map[$x][$y]->count === 1 || $this->map[$x][$y]->count === 2)
-							{
-								$this->map[$x][$y]->state = Tile::BUG;
-							}
-							break;
-						case Tile::BUG:
-							if ($this->map[$x][$y]->count !== 1)
-							{
-								$this->map[$x][$y]->state = Tile::EMPTY;
-							}
-							break;
-					}
+						switch ($this->map[$index][$x][$y]->state)
+						{
+							case Tile::EMPTY:
+								if ($this->map[$index][$x][$y]->count === 1 || $this->map[$index][$x][$y]->count === 2)
+								{
+									$this->map[$index][$x][$y]->state = Tile::BUG;
+								}
+								break;
+							case Tile::BUG:
+								if ($this->map[$index][$x][$y]->count !== 1)
+								{
+									$this->map[$index][$x][$y]->state = Tile::EMPTY;
+								}
+								break;
+						}
 
-					$this->map[$x][$y]->count = 0;
+						$this->map[$index][$x][$y]->count = 0;
+					}
 				}
 			}
 		}
 
 		public function draw()
 		{
-			for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
+			foreach ($this->map as $index => $data)
 			{
-				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
+				echo("#" . $index . PHP_EOL);
+
+				for ($y = $this->grid->min; $y <= $this->grid->max; $y++)
 				{
-					echo($this->map[$x][$y]->state);
+					for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
+					{
+						echo($this->map[$index][$x][$y]->state);
+					}
+
+					echo(PHP_EOL);
 				}
 
 				echo(PHP_EOL);
 			}
 
-			echo(PHP_EOL);
 		}
 
 		public function run()
@@ -145,8 +190,9 @@
 			$this->remember();
 
 			$loop = 1;
+			$running = true;
 
-			while (true)
+			while ($running === true)
 			{
 				$this->process();
 				$this->draw();
@@ -181,16 +227,19 @@
 			$index = 0;
 			$result = 0;
 
-			foreach ($this->map as $column)
+			foreach ($this->map as $layer)
 			{
-				foreach ($column as $tile)
+				foreach ($layer as $column)
 				{
-					if ($tile->state === Tile::BUG)
+					foreach ($column as $tile)
 					{
-						$result |= 1 << $index;
-					}
+						if ($tile->state === Tile::BUG)
+						{
+							$result |= 1 << $index;
+						}
 
-					$index++;
+						$index++;
+					}
 				}
 			}
 
@@ -206,7 +255,7 @@
 			{
 				for ($x = $this->grid->min; $x <= $this->grid->max; $x++)
 				{
-					if ($this->map[$x][$y]->state === Tile::BUG)
+					if ($this->map[0][$x][$y]->state === Tile::BUG)
 					{
 						$rating += pow(2, $index);
 					}
