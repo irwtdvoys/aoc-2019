@@ -103,3 +103,11 @@ Current intcode implementation could handle the system well once a "step" was ad
 ##### Day 24
 
 Fun task, the data structure for part two wasn't as complex as first though once the recursion was treated as a layer change.
+
+##### Day 25
+
+Fun day, adventure game was simple to get running (minor issue with recent intcode vm updates) worked my way through the puzzle manually recording output for automated mode.
+
+## Future
+
+Still missing two of the maze puzzles, will probably use the intcode work to have a play at writing a assembler and/or compiler =)
