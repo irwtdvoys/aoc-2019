@@ -26,9 +26,12 @@
 			return $encoded;
 		}
 
-		public static function output(string $data): string
+		public static function output($data): string
 		{
-			$data = explode(PHP_EOL, trim($data));
+			if (!is_array($data))
+			{
+				$data = explode(PHP_EOL, trim($data));
+			}
 
 			$output = "";
 
