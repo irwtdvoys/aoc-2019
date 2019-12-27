@@ -1,13 +1,13 @@
 <?php
-
 	namespace App;
 
-	use App\Intcode\ResettableVirtualMachine as VirtualMachine;
+	use App\Intcode\VirtualMachine;
 
 	class TractorBeam
 	{
 		private int $part;
 		private VirtualMachine $computer;
+		private VirtualMachine $initial;
 		private array $map;
 
 		private int $size = PHP_INT_MAX;
@@ -30,6 +30,13 @@
 		{
 			$filename = isset($override) ? $override : ROOT . "data/19/input";
 			$this->computer->load($filename);
+
+			$this->initial = clone $this->computer;
+		}
+
+		public function reset()
+		{
+			$this->computer = clone $this->initial;
 		}
 
 		public function scan()
@@ -66,7 +73,7 @@
 
 				for ($x = $from; $x < $to; $x++)
 				{
-					$this->computer->reset();
+					$this->reset();
 					$result = $this->search($x, $y);
 
 					$this->map[$x][$y] = $result;
@@ -104,7 +111,7 @@
 
 		private function search(int $x, int $y): int
 		{
-			$this->computer->reset();
+			$this->reset();
 			$result = $this->computer->run([$x, $y])[0];
 
 			return (int)$result;
