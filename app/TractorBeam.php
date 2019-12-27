@@ -41,6 +41,7 @@
 
 		public function scan()
 		{
+			$result = null;
 			$y = 0;
 			$stop = false;
 
@@ -90,8 +91,9 @@
 
 							if ($check === 1)
 							{
-								echo((($x * 10000) + $y - 99) . PHP_EOL);
-								die();
+								$result = (($x * 10000) + $y - 99);
+
+								break 2;
 							}
 
 							continue;
@@ -107,6 +109,8 @@
 					$stop = true;
 				}
 			}
+
+			return $result;
 		}
 
 		private function search(int $x, int $y): int
@@ -162,10 +166,15 @@
 
 		public function run()
 		{
-			$this->scan();
-			$this->draw();
+			$result = $this->scan();
 
-			return $this->affected();
+			if ($this->part === 1)
+			{
+				$this->draw();
+				$result = $this->affected();
+			}
+
+			return $result;
 		}
 	}
 ?>
