@@ -1,13 +1,13 @@
 <?php
-
 	namespace App;
 
-	use App\Intcode\ResettableVirtualMachine as VirtualMachine;
+	use App\Intcode\VirtualMachine;
 
 	class TractorBeam
 	{
 		private int $part;
 		private VirtualMachine $computer;
+		private VirtualMachine $initial;
 		private array $map;
 
 		private int $size = PHP_INT_MAX;
@@ -30,10 +30,18 @@
 		{
 			$filename = isset($override) ? $override : ROOT . "data/19/input";
 			$this->computer->load($filename);
+
+			$this->initial = clone $this->computer;
+		}
+
+		public function reset()
+		{
+			$this->computer = clone $this->initial;
 		}
 
 		public function scan()
 		{
+			$result = null;
 			$y = 0;
 			$stop = false;
 
@@ -66,7 +74,7 @@
 
 				for ($x = $from; $x < $to; $x++)
 				{
-					$this->computer->reset();
+					$this->reset();
 					$result = $this->search($x, $y);
 
 					$this->map[$x][$y] = $result;
@@ -83,8 +91,9 @@
 
 							if ($check === 1)
 							{
-								echo((($x * 10000) + $y - 99) . PHP_EOL);
-								die();
+								$result = (($x * 10000) + $y - 99);
+
+								break 2;
 							}
 
 							continue;
@@ -100,12 +109,14 @@
 					$stop = true;
 				}
 			}
+
+			return $result;
 		}
 
 		private function search(int $x, int $y): int
 		{
-			$this->computer->reset();
-			$result = $this->computer->run([$x, $y]);
+			$this->reset();
+			$result = $this->computer->run([$x, $y])[0];
 
 			return (int)$result;
 		}
@@ -155,10 +166,15 @@
 
 		public function run()
 		{
-			$this->scan();
-			$this->draw();
+			$result = $this->scan();
 
-			return $this->affected();
+			if ($this->part === 1)
+			{
+				$this->draw();
+				$result = $this->affected();
+			}
+
+			return $result;
 		}
 	}
 ?>
