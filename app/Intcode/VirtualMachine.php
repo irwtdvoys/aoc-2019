@@ -6,6 +6,7 @@
 	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VM\Memory;
 	use App\Intcode\VM\Modes;
+	use App\Intcode\VM\Opcodes;
 	use App\Intcode\VM\Parameter;
 	use Bolt\Files;
 	use Exception;
@@ -116,19 +117,19 @@
 		{
 			switch ($instruction->opcode)
 			{
-				case 1:
+				case Opcodes::ADD:
 					// Opcode 1 adds together numbers read from two positions and stores the result in a third position.
 					$parameters = $this->getParameters($instruction);
 
 					$this->memory->set($this->getPosition($instruction->parameters[2]), ($parameters[0] + $parameters[1]));
 					break;
-				case 2:
+				case Opcodes::MULTIPLY:
 					// Opcode 2 works exactly like opcode 1, except it multiplies the two inputs instead of adding them.
 					$parameters = $this->getParameters($instruction);
 
 					$this->memory->set($this->getPosition($instruction->parameters[2]), ($parameters[0] * $parameters[1]));
 					break;
-				case 3:
+				case Opcodes::INPUT:
 					// Opcode 3 takes a single integer as input and saves it to the position given by its only parameter. For example, the instruction 3,50 would take an input value and store it at address 50.
 
 					if ($this->interrupt->type === InterruptTypes::INPUT && $this->interrupt->allow && $this->inputs->count() === 0)
@@ -153,7 +154,7 @@
 						$this->interrupt->allow = true;
 					}
 					break;
-				case 4:
+				case Opcodes::OUTPUT:
 					// Opcode 4 outputs the value of its only parameter. For example, the instruction 4,50 would output the value at address 50.
 					$this->output[] = $this->getValue($instruction->parameters[0]);
 
@@ -162,7 +163,7 @@
 						$this->paused = true;
 					}
 					break;
-				case 5:
+				case Opcodes::JUMP_IF_TRUE:
 					// if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
 					$parameters = $this->getParameters($instruction);
 
@@ -171,7 +172,7 @@
 						$this->cursor = $parameters[1];
 					}
 					break;
-				case 6:
+				case Opcodes::JUMP_IF_FALSE:
 					// if the first parameter is zero, it sets the instruction pointer to the value from the second parameter. Otherwise, it does nothing.
 					$parameters = $this->getParameters($instruction);
 
@@ -180,7 +181,7 @@
 						$this->cursor = $parameters[1];
 					}
 					break;
-				case 7:
+				case Opcodes::LESS_THAN:
 					// if the first parameter is less than the second parameter, it stores 1 in the position given by the third parameter. Otherwise, it stores 0.
 					$parameters = $this->getParameters($instruction);
 
@@ -188,7 +189,7 @@
 
 					$this->memory->set($this->getPosition($instruction->parameters[2]), $value);
 					break;
-				case 8:
+				case Opcodes::EQUALS:
 					// if the first parameter is equal to the second parameter, it stores 1 in the position given by the third parameter. Otherwise, it stores 0.
 					$parameters = $this->getParameters($instruction);
 
@@ -196,10 +197,10 @@
 
 					$this->memory->set($this->getPosition($instruction->parameters[2]), $value);
 					break;
-				case 9:
+				case Opcodes::RELATIVE_BASE_OFFSET:
 					$this->relativeBase += $this->getValue($instruction->parameters[0]);
 					break;
-				case 99:
+				case Opcodes::HALT:
 					$this->stopped = true;
 					break;
 				default:
