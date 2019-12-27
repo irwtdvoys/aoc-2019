@@ -50,11 +50,11 @@
 
 		public function nextInstruction(): Instruction
 		{
-			// send 4 long memory chunk from cursor (max used by instructions, only required added to instruction)
-			$instruction = new Instruction($this->memory->slice($this->cursor, 4));
+			$code = $this->memory->get($this->cursor) % pow(10, 2);
+			$count = Opcodes::parameterCount($code);
 
-			// Move cursor dynamic amount based on number of memory locations used by the instruction
-			$this->cursor += count($instruction->parameters) + 1;
+			$instruction = new Instruction($this->memory->slice($this->cursor, $count));
+			$this->cursor += $count;
 
 			return $instruction;
 		}
