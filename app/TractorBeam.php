@@ -105,7 +105,7 @@
 		private function search(int $x, int $y): int
 		{
 			$this->computer->reset();
-			$result = $this->computer->run([$x, $y]);
+			$result = $this->computer->run([$x, $y])[0];
 
 			return (int)$result;
 		}
