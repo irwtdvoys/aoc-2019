@@ -16,7 +16,7 @@
 
 	$helper = new VirtualMachine();
 	$helper->load($filename);
-	$result = $helper->run();
+	$helper->run();
 
-	echo($result);
+	echo($helper->output());
 ?>
