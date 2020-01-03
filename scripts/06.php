@@ -5,18 +5,6 @@
 
 	include_once(ROOT . "bin/init.php");
 
-	$test = "COM)B
-B)C
-C)D
-D)E
-E)F
-B)G
-G)H
-D)I
-E)J
-J)K
-K)L";
-
 	$helper = new OrbitalTransfers();
 	$helper->load();
 	$result = $helper->run(1);

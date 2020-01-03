@@ -3,7 +3,7 @@
 
 	use Bolt\Enum;
 
-	class Directions extends Enum
+	class ArrowDirections extends Enum
 	{
 		const UP = "^";
 		const RIGHT = ">";

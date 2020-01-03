@@ -1,7 +1,7 @@
 <?php
 	namespace App;
 
-	use App\BreakoutTiles as Tiles;
+	use App\Tiles\Breakout as Tiles;
 	use App\Intcode\VM\InterruptTypes;
 	use App\Intcode\VirtualMachine;
 	use App\Utils\Colours;

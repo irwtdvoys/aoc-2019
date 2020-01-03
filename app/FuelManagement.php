@@ -1,13 +1,14 @@
 <?php
 	namespace App;
 
+	use App\Utils\CharacterDirections as Directions;
 	use Bolt\Files;
 
 	class FuelManagement
 	{
-		public $paths;
-		public $grid = array();
-		public $steps = array();
+		public array $paths;
+		public array $grid = array();
+		public array $steps = array();
 		private $cursor;
 
 		public function addPath(string $path)
@@ -37,28 +38,28 @@
 			{
 				switch ($step['direction'])
 				{
-					case "U":
+					case Directions::UP:
 						$function = function ($cursor) {
 							$cursor[1]++;
 
 							return $cursor;
 						};
 						break;
-					case "R":
+					case Directions::RIGHT:
 						$function = function ($cursor) {
 							$cursor[0]++;
 
 							return $cursor;
 						};
 						break;
-					case "D":
+					case Directions::DOWN:
 						$function = function ($cursor) {
 							$cursor[1]--;
 
 							return $cursor;
 						};
 						break;
-					case "L":
+					case Directions::LEFT:
 						$function = function ($cursor) {
 							$cursor[0]--;
 
