@@ -1,7 +1,7 @@
 <?php
 	use App\AsciiProcessor;
 	use App\Intcode\VirtualMachine;
-	use App\Utils\Directions;
+	use App\Utils\ArrowDirections as Directions;
 	use App\Utils\Position2d;
 
 	define("ROOT", __DIR__ . "/../");
