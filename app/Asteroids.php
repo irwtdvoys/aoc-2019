@@ -1,5 +1,6 @@
 <?php
 	namespace App;
+
 	use Bolt\Files;
 	use Bolt\Maths;
 
@@ -36,7 +37,7 @@
 			}
 		}
 
-		public function run($part = 1)
+		public function run(int $part = 1)
 		{
 			$this->map();
 
