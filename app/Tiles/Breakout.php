@@ -1,9 +1,9 @@
 <?php
-	namespace App;
+	namespace App\Tiles;
 
 	use Bolt\Enum;
 
-	class BreakoutTiles extends Enum
+	class Breakout extends Enum
 	{
 		const EMPTY = 0;
 		const WALL = 1;

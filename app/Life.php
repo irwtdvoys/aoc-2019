@@ -1,24 +1,9 @@
 <?php
 	namespace App;
 
-	use Bolt\Enum;
+	use App\Tiles\Life as Tile;
 	use Bolt\Files;
 	use Exception;
-
-	class Tile extends Enum
-	{
-		const EMPTY = ".";
-		const BUG = "#";
-
-		public int $count;
-		public string $state;
-
-		public function __construct(string $state = self::EMPTY)
-		{
-			$this->count = 0;
-			$this->state = $state;
-		}
-	}
 
 	class Life
 	{
